@@ -10,7 +10,11 @@ At the begining of the project, only the main idea was clear so, the project sta
 *02. Virtual Environment Setting:*
 After creating the main documents the following step was defining a Python Virtual Environment in the project XXXROUTEXXXXXXXXXXXXX?
 
+#### Virtual Environment
 
+cmd console: cd wd
+cdm console: pipenv install
+cmd console: pipenv shell (for installing libraries and packages) or pipenv run to activate the project
 
 
 
