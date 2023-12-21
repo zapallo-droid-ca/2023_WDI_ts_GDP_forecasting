@@ -45,22 +45,23 @@ gantt
        title *PROJECT PLAN*
 
        section DOCUMENTATION
-       PROJECT DEFINITION            :crit, active, des01, 2023-12-21 , 1d
+       PROJECT DEFINITION            :crit, done, des01, 2023-12-21 , 1d
+	   project_definition.mkd        :milestone, done, after des01, 0d
        PROJECT PLANNING              :crit, active, des02, after des01, 1d
        PROJECT NOTEBOOK              :      active, des03, after des02, 2023-12-31
        EXECUTIVE REPORT              :              des04, after des02, 2023-12-31
 
        section ETL
-       EXTRACTION FUNCTION DEV. 	 :crit, active, des05, after des02, 1d
-       TRANSFORMATION FUNCTIONS DEV. :crit, active, des06, after des02, 2d
-	   LOAD FUNCTIONS DEV.			 :crit, active, des07, after des05, 2d
-	   DATAMART DEVELOPMENT (SQLIte) :crit, active, des08, after des07, 1d
+       EXTRACTION FUNCTION DEV. 	 :crit,  des05, after des02, 1d
+       TRANSFORMATION FUNCTIONS DEV. :crit,  des06, after des02, 2d
+	   LOAD FUNCTIONS DEV.			 :crit,  des07, after des05, 2d
+	   DATAMART DEVELOPMENT (SQLIte) :crit,  des08, after des07, 1d
 
        section ANALYSIS AND MODELING
-       EXPLORATORY DATA ANALYSIS     :crit, active, des09, after des08, 1d
-	   PRE-PROCESSING FUNCTIONS DEV. :crit, active, des10, after des09, 1d
-	   PREDICTIVE DATA ANALYSIS      :crit, active, des11, after des09, 2d
-	   MODELS EVALUATION             :crit, active, des12, after des10, 1d
+       EXPLORATORY DATA ANALYSIS     :crit,  des09, after des08, 1d
+	   PRE-PROCESSING FUNCTIONS DEV. :crit,  des10, after des09, 1d
+	   PREDICTIVE DATA ANALYSIS      :crit,  des11, after des09, 2d
+	   MODELS EVALUATION             :crit,  des12, after des10, 1d
 	   
 	   section DEPLOYMENT
        DASHBOARD DEVELOPMENT         :crit, active, des13, after des12, 1d
