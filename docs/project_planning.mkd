@@ -37,18 +37,18 @@ Developing of deliverables resources specified in "Schedule" section based on th
 | Modeling                | train.py                                                 | 12:00 hs     |           |
 | Evaluation              | test.py / models_summary.xlsx                            | 4:00 hs      |           |
 | Deployment              | executive_report.pptx / prod.pbix / project_notebook.mkd | 8:00 hs      |           | 
-| *TOTAL:*                |                                                          | 45:00 hs     |           |
+|                         |                                                 *TOTAL:* | 45:00 hs     |           |
 
 ```mermaid renderAs=mermaid
 gantt
        dateFormat  YYYY-MM-DD
-       title PROJECT PLAN
+       title *PROJECT PLAN*
 
        section DOCUMENTATION
        PROJECT DEFINITION            :crit, active, des01, 2023-12-21 , 1d
        PROJECT PLANNING              :crit, active, des02, after des01, 1d
-       PROJECT NOTEBOOK              :      active, des03, after des02, 
-       EXECUTIVE REPORT              :              des04, after des02, 
+       PROJECT NOTEBOOK              :      active, des03, after des02, 2023-12-31
+       EXECUTIVE REPORT              :              des04, after des02, 2023-12-31
 
        section ETL
        EXTRACTION FUNCTION DEV. 	 :crit, active, des05, after des02, 1d
@@ -73,8 +73,9 @@ gantt
 | Budget Item | Cost |     Quantity    | Total Cost |
 | :---------: | :--: | :-------------: | :--------: |
 | Analyst HS  | 1    | 41              | 41         |
-| Hardware HS | 0    | 41              | 0         |
+| Hardware HS | 0    | 41              | 0          |
 |             |      | Overall Budget: | 41         |
+
 Cost unit: Hs of an analyst with propper hardware
 
 

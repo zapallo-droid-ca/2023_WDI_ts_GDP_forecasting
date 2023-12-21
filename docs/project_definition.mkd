@@ -1,4 +1,4 @@
-#PROJECT DEFINITION
+# PROJECT DEFINITION
 
 [GDP](https://databank.worldbank.org/reports.aspx?source=2&type=metadata&series=NY.GDP.MKTP.CD): Gross Domestic Product, monetary measure of market value considering all the final goods and services produced by country in a given time period.
 [WDI](https://datatopics.worldbank.org/world-development-indicators/): World Bank World Development Indicators, compilation of relevant comparable statistics about global development and the fight against poverty.
