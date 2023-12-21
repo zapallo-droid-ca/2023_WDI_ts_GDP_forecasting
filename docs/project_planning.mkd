@@ -42,29 +42,41 @@ Developing of deliverables resources specified in "Schedule" section based on th
 ```mermaid renderAs=mermaid
 gantt
        dateFormat  YYYY-MM-DD
-       title *PROJECT PLAN*
+       title PROJECT PLAN
 
        section DOCUMENTATION
-       PROJECT DEFINITION            :crit, done, des01, 2023-12-21 , 1d
+       PROJECT DEFINITION            :crit,      done, des01, 2023-12-21 , 1d
 	   project_definition.mkd        :milestone, done, after des01, 0d
-       PROJECT PLANNING              :crit, active, des02, after des01, 1d
-       PROJECT NOTEBOOK              :      active, des03, after des02, 2023-12-31
-       EXECUTIVE REPORT              :              des04, after des02, 2023-12-31
+       PROJECT PLANNING              :crit,      active, des02, after des01, 1d
+	   project_planning.mkd          :milestone, active, after des02, 0d
+       PROJECT NOTEBOOK              :active,            des03, after des02, 2023-12-31
+	   project_notebook.mkd			 :milestone,              , after des03, 0d
+       EXECUTIVE REPORT              :crit,              des04, after des02, 2023-12-31
+	   executive_report.pptx         :milestone,              , after des04, 0d
 
        section ETL
-       EXTRACTION FUNCTION DEV. 	 :crit,  des05, after des02, 1d
-       TRANSFORMATION FUNCTIONS DEV. :crit,  des06, after des02, 2d
-	   LOAD FUNCTIONS DEV.			 :crit,  des07, after des05, 2d
-	   DATAMART DEVELOPMENT (SQLIte) :crit,  des08, after des07, 1d
+       EXTRACTION FUNCTION DEV. 	 :crit,              des05, after des02, 1d
+       TRANSFORMATION FUNCTIONS DEV. :crit,              des06, after des02, 2d
+	   LOAD FUNCTIONS DEV.			 :crit,              des07, after des05, 2d
+	   etl.py						 :milestone,              , after des07, 0d
+	   DATAMART DEVELOPMENT (SQLIte) :crit,              des08, after des07, 1d
+	   datamart.db                   :milestone,              , after des08, 0d
+	   df.csv.gz	                 :milestone,              , after des08, 0d
 
        section ANALYSIS AND MODELING
-       EXPLORATORY DATA ANALYSIS     :crit,  des09, after des08, 1d
-	   PRE-PROCESSING FUNCTIONS DEV. :crit,  des10, after des09, 1d
-	   PREDICTIVE DATA ANALYSIS      :crit,  des11, after des09, 2d
-	   MODELS EVALUATION             :crit,  des12, after des10, 1d
+       EXPLORATORY DATA ANALYSIS     :crit,              des09, after des08, 1d
+	   eda.ipynb                     :milestone,              , after des09, 0d
+	   PRE-PROCESSING FUNCTIONS DEV. :crit,              des10, after des09, 1d
+	   PREDICTIVE DATA ANALYSIS      :crit,              des11, after des09, 2d
+	   train.py                      :milestone,              , after des11, 0d
+	   MODELS EVALUATION             :crit,              des12, after des10, 1d
+	   test.py                       :milestone,              , after des12, 0d
+	   models_summary.xlsx           :milestone,              , after des12, 0d
 	   
 	   section DEPLOYMENT
-       DASHBOARD DEVELOPMENT         :crit, active, des13, after des12, 1d
+       DASHBOARD DEVELOPMENT         :crit,              des13, after des12, 1d
+	   descriptive_analysis.pbix     :milestone,              , after des13, 0d
+	   prod.pbix                     :milestone,              , after des13, 0d
 	   
 ```
 
