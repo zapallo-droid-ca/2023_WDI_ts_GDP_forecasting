@@ -1,0 +1,38 @@
+*PROJECT TECHNICAL GUIDE*
+
+*01. Preliminary Definitions:*
+At the begining of the project, only the main idea was clear so, the project started working with three markdown files in simultaneus, project_definition, project_planning and project_steps.
+
+* Project Framework: The project methodology aims to adapt the CRISP-DM framework to the problem and using adaptations of Osterwalder CANVAS as a project definition and summary tool.
+
+
+
+*02. Virtual Environment Setting:*
+After creating the main documents the following step was defining a Python Virtual Environment in the project XXXROUTEXXXXXXXXXXXXX?
+
+
+
+
+
+01. Setting Virtual Environment
+02. Creating ETL code using Python and SQLite
+03. Exporting 
+00. Defining the ML framework to tracking all the experiments (PYTHON)
+
+
+
+
+
+
+
+
+
+
+
+
+Reference Articles:
+
+[](https://jadangpooiling.medium.com/crisp-dm-methodology-with-python-model-deployment-using-flask-included-classification-case-33b9e184f4e7)
+[](https://github.com/patiegm/Datasci_Resources/blob/master/CRISP-DM%20Analysis%20Template.ipynb)
+[](https://medium.com/@leandroscarvalho/data-product-canvas-a-practical-framework-for-building-high-performance-data-products-7a1717f79f0)
+[](https://swiss-sdi.ch/193/business-data-science-canvas/)

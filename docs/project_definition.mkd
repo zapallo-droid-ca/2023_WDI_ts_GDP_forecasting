@@ -1,0 +1,92 @@
+#PROJECT DEFINITION
+
+[GDP](https://databank.worldbank.org/reports.aspx?source=2&type=metadata&series=NY.GDP.MKTP.CD): Gross Domestic Product, monetary measure of market value considering all the final goods and services produced by country in a given time period.
+[WDI](https://datatopics.worldbank.org/world-development-indicators/): World Bank World Development Indicators, compilation of relevant comparable statistics about global development and the fight against poverty.
+
+## SUMMARY:
+TBD
+
+## DEFINITIONS:
+
+*PROBLEM DESCRIPTION:* The project aims to emulate an hypotetic situation where an organization has request to identify the top 10 countries by GDP in a 10 years horizont to answer the main question, among the top 10 economies, what would be the best countries to invest in taking into the account the information given by the 15 avaiable WDI.
+
+*BUSINESS REQUIREMENT:* To detect the potencial top 10 Countries by GDP in a 10 years horizont highligthing the most relevant changes from the baseline.
+
+*OBJECTIVE:* To achive an average MAPE of <= 10% in the forecasting of 10 years GDP values to identify the top 10 economies in the given time horizont
+
+*KEY ACTIVITIES:*
+* Characterize the countries by the given metrics.
+* 10 years forecasting of GDP indicator.
+* Analyze the GDP indicator by country in a 10 years horizon giving to the analysis contextual information from others WDI
+* Detect the main changes among the countries ranking between the baseline and the target horizon.
+
+## DATA SOURCES:
+
+World Bank: World Development Indicators [WDI](https://datatopics.worldbank.org/world-development-indicators/themes/economy.html)
+
+| *CATEGORY*                      | *INDICATOR*                                         | *CODE*                 |
+|---------------------------------|-----------------------------------------------------|------------------------|
+| Growth and economic structure   | GDP (current US$)                                   | NY.GDP.MKTP.CD         |
+| Growth and economic structure   | Agriculture, value added (% of GDP)                 | NV.AGR.TOTL.ZS         |
+| Growth and economic structure   | Industry, value added (% of GDP)                    | NV.IND.TOTL.ZS         |
+| Growth and economic structure   | Services, value added (% of GDP)                    | NV.SRV.TOTL.ZS         |
+| Growth and economic structure   | Final consumption expenditure (% of GDP)            | NE.CON.TOTL.ZS         |
+| Growth and economic structure   | Gross capital formation (% of GDP)                  | NE.GDI.TOTL.ZS         |
+| Growth and economic structure   | Exports of goods and services (% of GDP)            | NE.EXP.GNFS.ZS         |
+| Growth and economic structure   | Imports of goods and services (% of GDP)            | NE.IMP.GNFS.ZS         |
+| Income and savings              | GNI per capita, Atlas method (current US$)          | NY.GNP.PCAP.CD         |
+| Income and savings              | Population, total                                   | SP.POP.TOTL            |
+| Income and savings              | Gross savings (% of GDP)                            | NY.GNS.ICTR.ZS         |
+| Balance of payments             | Current account balance (% of GDP)                  | BN.CAB.XOKA.GD.ZS      |
+| Balance of payments             | Foreign direct investment, net inflows (% of GDP)   | BX.KLT.DINV.WD.GD.ZS   |	
+| Balance of payments             | Personal remittances, received (% of GDP)           | BX.TRF.PWKR.DT.GD.ZS   |
+| Prices and terms of trade       | Consumer price index (2010 = 100)                   | FP.CPI.TOTL            |
+
+Countriy Names Data: World Bank World Integrated Trade Solution [WITS](https://wits.worldbank.org/CountryProfile/Metadata/en/Country/All)
+
+
+## ANALYSIS FRAMEWORK:
+
+* Data Understanding - Exploratory Data Analysis (EDA):
+I. Time Series Decomposition [Level, Trend, Seasonal and Residual]
+II. Outliers Detection [Hampel Filter over Level and Residual Component]
+III. Box & Jenkins Approach with time Series Scaled
+IV. External Variables Importance trough Granger Causality
+
+* Data Preparation (function development):
+I. External and dummie variables selector
+II. Pre-proccessing iterator (Scalation and Differenciation)
+III. Lags and Training windows iterator
+
+* Modeling (Clasic Models Framework):
+I. Function Pre-proccessing calling
+II. Function Lags and Training windows iterator calling
+III. Training with Parameters Optimization
+IV. Recursive prediccion and testing
+V. Evaluation and partial selection (among Classic Models)
+
+* Modeling (ML and DL Models Framework):
+I. Function External and dummie variables selector calling
+II. Function Pre-proccessing calling
+III. Function Lags and Training windows iterator calling
+IV. Training with Parameters Optimization
+V. Recursive prediccion and testing
+VI. Evaluation and partial selection (among Classic Models)
+
+*FORECASTING TECHNIQUES:*
+* Holt-Winters (Classic)
+* ARIMA (Classic)
+* XGBoost (Machine Learning)
+* Random Forest (Machine Learning)
+* Prophet (Machine Learning)
+* GRU (Deep Learning)
+
+*EVALUATION METRICS:*
+Aiming a better comprehension among the Stackeholders and considering that the problem is related to time series the evaluation metric proposed is MAPE and the ideal average yearly value shall be <= 10%
+
+*DEPLOYMENT RESOURCES:*
+Executive Report (.pptx)
+Executive Summary (.pbix)
+Project documents (.mkd)
+
+

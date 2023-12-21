@@ -1,0 +1,10 @@
+## Project Pipeline
+
+### Configuration
+#### Virtual Environment
+
+cmd console: cd wd
+cdm console: pipenv install
+cmd console: pipenv shell (for installing libraries and packages) or pipenv run to activate the project
+
+ 
