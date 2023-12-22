@@ -8,8 +8,8 @@
 
 ## KEY CONCEPTS:
 
-[GDP](https://databank.worldbank.org/reports.aspx?source=2&type=metadata&series=NY.GDP.MKTP.CD): Gross Domestic Product, monetary measure of market value considering all the final goods and services produced by country in a given time period.
-[WDI](https://datatopics.worldbank.org/world-development-indicators/): World Bank World Development Indicators, compilation of relevant comparable statistics about global development and the fight against poverty.
+[GDP](https://databank.worldbank.org/reports.aspx?source=2&type=metadata&series=NY.GDP.MKTP.CD): Gross Domestic Product, monetary measure of market value considering all the final goods and services produced by country in a given time period. <br>
+[WDI](https://datatopics.worldbank.org/world-development-indicators/): World Bank World Development Indicators, compilation of relevant comparable statistics about global development and the fight against poverty. <br>
 
 ## SUMMARY:
 TBD
@@ -103,9 +103,13 @@ Given the requirements for the analysis the design of data structure will be wit
 
 Version: 1.0 - Preliminar Design (Planned)
 
+
 ```mermaid renderAs=mermaid
+---
+title: Basic Data Structure-ERD
+---
 erDiagram
-    dim_country ||--o{ ft_wdi
+    dim_country ||--o{ ft_wdi : "1-*"
     dim_country {
         string code
 		string iso3
@@ -138,7 +142,7 @@ erDiagram
 		float GDP_USD_seasonal
 		float GDP_USD_residual
     }
-	ft_nas }o--|| dim_country
+    ft_nas }o--|| dim_country : "1-* Auxiliar table"
     ft_nas {
         string country_iso3
 		int time
@@ -157,6 +161,7 @@ erDiagram
 		boolean remittances_%GDP
 		boolean services_%GDP
     }
+	
 ```
 
 
