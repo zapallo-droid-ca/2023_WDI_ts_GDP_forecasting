@@ -1,0 +1,80 @@
+
+#WDI to extract
+wdi:
+- name: 'GDP (current USD)'
+  series: 'NY.GDP.MKTP.CD'
+  category: 'Growth and economic structure'
+  gdp_related: 0
+  col_name: 'GDP_USD'
+- name: 'Agriculture, value added (% of GDP)'
+  series: 'NV.AGR.TOTL.ZS'
+  category: 'Growth and economic structure'
+  gdp_related: 1
+  col_name: 'agriculture_%GDP'
+- name: 'Industry, value added (% of GDP)'
+  series: 'NV.IND.TOTL.ZS'
+  category: 'Growth and economic structure'
+  gdp_related: 1
+  col_name: 'industry_%GDP'
+- name: 'Services, value added (% of GDP)'
+  series: 'NV.SRV.TOTL.ZS'
+  category: 'Growth and economic structure'
+  gdp_related: 1
+  col_name: 'services_%GDP'
+- name: 'Final consumption expenditure (% of GDP)'
+  series: 'NE.CON.TOTL.ZS'
+  category: 'Growth and economic structure'
+  gdp_related: 1
+  col_name: 'consumption_%GDP'
+- name: 'Gross capital formation (% of GDP)'
+  series: 'NE.GDI.TOTL.ZS'
+  category: 'Growth and economic structure'
+  gdp_related: 1
+  col_name: 'acapital_formation_%GDP'
+- name: 'Exports of goods and services (% of GDP)'
+  series: 'NE.EXP.GNFS.ZS'
+  category: 'Growth and economic structure'
+  gdp_related: 1
+  col_name: 'exports_%GDP'
+- name: 'Imports of goods and services (% of GDP)'
+  series: 'NE.IMP.GNFS.ZS'
+  category: 'Growth and economic structure'
+  gdp_related: 1
+  col_name: 'imports_%GDP'
+- name: 'GNI per capita, Atlas method (current USD)'
+  series: 'NY.GNP.PCAP.CD'
+  category: 'Income and savings'
+  gdp_related: 0
+  col_name: 'GINI_per_capita'
+- name: 'Population, total'
+  series: 'SP.POP.TOTL'
+  category: 'Income and savings'
+  gdp_related: 0
+  col_name: 'population'
+- name: 'Gross savings (% of GDP)'
+  series: 'NY.GNS.ICTR.ZS'
+  category: 'Income and savings'
+  gdp_related: 1
+  col_name: 'gross_savings_%GDP'
+- name: 'Current account balance (% of GDP)'
+  series: 'BN.CAB.XOKA.GD.ZS'
+  category: 'Balance of payments'
+  gdp_related: 1
+  col_name: 'account_balance_%GDP'
+- name: 'Foreign direct investment, net inflows (% of GDP)'
+  series: 'BX.KLT.DINV.WD.GD.ZS'
+  category: 'Balance of payments'
+  gdp_related: 1
+  col_name: 'foreign_investment_%GDP'
+- name: 'Personal remittances, received (% of GDP)'
+  series: 'BX.TRF.PWKR.DT.GD.ZS'
+  category: 'Balance of payments'
+  gdp_related: 1
+  col_name: 'remittances_%GDP'
+- name: 'Consumer price index (2010 = 100)' 
+  series: 'FP.CPI.TOTL'
+  category: 'Balance of payments'
+  gdp_related: 0
+  col_name: 'consumer_price_idx_b2010'
+
+wits_metadata_path: 'http://wits.worldbank.org/data/public/WITSCountryProfile-Country_Indicator_ProductMetada-en.xlsx'

@@ -3,7 +3,8 @@
 # Version History
 | Version # | Implemented By  | Revision Date |  Approved By  | Approval Date |    Reason   |
 | :-------: | :-------------: | :-----------: | :-----------: | :-----------: | :---------: |
-|    1.0    |   Data Anlayst  |    mm/dd/yy   |    End User   |    mm/dd/yy   |             |
+|    1.0    |   Data Anlayst  |    mm/dd/yy   |    End User   |    mm/dd/yy   | Preliminar  |
+|    2.0    |   Data Anlayst  |    mm/dd/yy   |    End User   |    mm/dd/yy   | Definitive  |
 
 
 ## Executive summary
@@ -15,8 +16,9 @@ TBD
 ## Scope
 Developing of deliverables resources specified in "Schedule" section based on the project objective and Key Activities
 
-## Objectives
-* To detect the potencial top 10 Countries by GDP in a 10 years horizont highligthing the most relevant changes from the baseline.	
+*BUSINESS REQUIREMENT:* To detect the potencial top 10 Countries by GDP in a 10 years horizont highligthing the most relevant changes from the baseline.
+
+*OBJECTIVE:* To achive an average MAPE of <= 10% in the forecasting of 10 years GDP values to identify the top 10 economies in the given time horizont
 
 *KEY ACTIVITIES:*
 * Characterize the countries by the given metrics.
@@ -30,8 +32,8 @@ Developing of deliverables resources specified in "Schedule" section based on th
 
 | *PHASE*                 | *DELIVERABLE*                                            | *HS PLANNED* | *HS REAL* |
 | :---------------------: | :------------------------------------------------------: | :----------: | :-------: |
-| Project Definition      | project_definition.mkd                                   | 3:00 hs      |           |
-| Business Understanding  | project_planning.mkd                                     | 2:00 hs      |           |
+| Project Definition      | project_definition.mkd                                   | 3:00 hs      | 1:30 hs   |
+| Business Understanding  | project_planning.mkd                                     | 2:00 hs      | 1:50 hs   |
 | Data Understanding      | etl.py / eda.ipynb / descriptive_analysis.pbix           | 12:00 hs     |           |
 | Data Preparation        | df.csv.gz / datamart.db                                  | 4:00 hs      |           |
 | Modeling                | train.py                                                 | 12:00 hs     |           |
@@ -46,37 +48,37 @@ gantt
 
        section DOCUMENTATION
        PROJECT DEFINITION            :crit,      done, des01, 2023-12-21 , 1d
-	   project_definition.mkd        :milestone, done, after des01, 0d
-       PROJECT PLANNING              :crit,      active, des02, after des01, 1d
-	   project_planning.mkd          :milestone, active, after des02, 0d
-       PROJECT NOTEBOOK              :active,            des03, after des02, 2023-12-31
-	   project_notebook.mkd			 :milestone,              , after des03, 0d
-       EXECUTIVE REPORT              :crit,              des04, after des02, 2023-12-31
-	   executive_report.pptx         :milestone,              , after des04, 0d
+	   project_definition.mkd        :milestone, done,        after des01, 0d
+       PROJECT PLANNING              :crit,      done, des02, after des01, 1d
+	   project_planning.mkd          :milestone, done,        after des02, 0d
+       PROJECT NOTEBOOK              :active,  		   des03, after des02, 2023-12-31
+	   project_notebook.mkd			 :milestone,            , after des03, 0d
+       EXECUTIVE REPORT              :crit,            des04, after des02, 2023-12-31
+	   executive_report.pptx         :milestone,            , after des04, 0d
 
        section ETL
-       EXTRACTION FUNCTION DEV. 	 :crit,              des05, after des02, 1d
-       TRANSFORMATION FUNCTIONS DEV. :crit,              des06, after des02, 2d
-	   LOAD FUNCTIONS DEV.			 :crit,              des07, after des05, 2d
-	   etl.py						 :milestone,              , after des07, 0d
-	   DATAMART DEVELOPMENT (SQLIte) :crit,              des08, after des07, 1d
-	   datamart.db                   :milestone,              , after des08, 0d
-	   df.csv.gz	                 :milestone,              , after des08, 0d
+       EXTRACTION FUNCTION DEV. 	 :crit, active,    des05, after des02, 1d
+       TRANSFORMATION FUNCTIONS DEV. :crit,            des06, after des02, 2d
+	   LOAD FUNCTIONS DEV.			 :crit,            des07, after des05, 2d
+	   etl.py						 :milestone,            , after des07, 0d
+	   DATAMART DEVELOPMENT (SQLIte) :crit,            des08, after des07, 1d
+	   datamart.db                   :milestone,            , after des08, 0d
+	   df.csv.gz	                 :milestone,            , after des08, 0d
 
        section ANALYSIS AND MODELING
-       EXPLORATORY DATA ANALYSIS     :crit,              des09, after des08, 1d
-	   eda.ipynb                     :milestone,              , after des09, 0d
-	   PRE-PROCESSING FUNCTIONS DEV. :crit,              des10, after des09, 1d
-	   PREDICTIVE DATA ANALYSIS      :crit,              des11, after des09, 2d
-	   train.py                      :milestone,              , after des11, 0d
-	   MODELS EVALUATION             :crit,              des12, after des10, 1d
-	   test.py                       :milestone,              , after des12, 0d
-	   models_summary.xlsx           :milestone,              , after des12, 0d
+       EXPLORATORY DATA ANALYSIS     :crit,            des09, after des08, 1d
+	   eda.ipynb                     :milestone,            , after des09, 0d
+	   PRE-PROCESSING FUNCTIONS DEV. :crit,            des10, after des09, 1d
+	   PREDICTIVE DATA ANALYSIS      :crit,            des11, after des09, 2d
+	   train.py                      :milestone,            , after des11, 0d
+	   MODELS EVALUATION             :crit,            des12, after des10, 1d
+	   test.py                       :milestone,            , after des12, 0d
+	   models_summary.xlsx           :milestone,            , after des12, 0d
 	   
 	   section DEPLOYMENT
-       DASHBOARD DEVELOPMENT         :crit,              des13, after des12, 1d
-	   descriptive_analysis.pbix     :milestone,              , after des13, 0d
-	   prod.pbix                     :milestone,              , after des13, 0d
+       DASHBOARD DEVELOPMENT         :crit,            des13, after des12, 1d
+	   descriptive_analysis.pbix     :milestone,            , after des13, 0d
+	   prod.pbix                     :milestone,            , after des13, 0d
 	   
 ```
 
@@ -118,4 +120,5 @@ Cost unit: Hs of an analyst with propper hardware
 | project_notebook.mkd       |             | Data Analyst       |
 
 
-
+## References and external resources
+[mermaid.js GANTT](https://mermaid.js.org/syntax/gantt.html)

@@ -1,20 +1,79 @@
-*PROJECT TECHNICAL GUIDE*
+# PROJECT NOTES
 
-*01. Preliminary Definitions:*
+# Version History
+| Version # | Implemented By  | Revision Date |  Approved By  | Approval Date |    Reason   |
+| :-------: | :-------------: | :-----------: | :-----------: | :-----------: | :---------: |
+|    1.0    |   Data Anlayst  |    mm/dd/yy   |    End User   |    mm/dd/yy   | Preliminar  |
+|    2.0    |   Data Anlayst  |    mm/dd/yy   |    End User   |    mm/dd/yy   | Definitive  |
+
+## 01. Preliminary Definitions:*
 At the begining of the project, only the main idea was clear so, the project started working with three markdown files in simultaneus, project_definition, project_planning and project_steps.
 
-* Project Framework: The project methodology aims to adapt the CRISP-DM framework to the problem and using adaptations of Osterwalder CANVAS as a project definition and summary tool.
+* *Project Framework:* The project methodology aims to adapt the CRISP-DM framework to the problem and using adaptations of Osterwalder CANVAS as a project definition and summary tool.
 
 
 
-*02. Virtual Environment Setting:*
-After creating the main documents the following step was defining a Python Virtual Environment in the project XXXROUTEXXXXXXXXXXXXX?
+## 02. Virtual Environment Setting:
+Before starting the ETL process, a virtual environment will be created to handle the project:
 
-#### Virtual Environment
-
+'''
 cmd console: cd wd
 cdm console: pipenv install
 cmd console: pipenv shell (for installing libraries and packages) or pipenv run to activate the project
+'''
+
+where: wd should be the work directory where the project will be hosted.
+
+in every work session with python the cmd console will be open and setted to operate with the Virtual Environment and the python interpreter will be setted with the same PipEnv.
+
+I use to working with Spyder so, in the following direction of spyder is possible to select the virtual environment python.exe from a given folder Tools/Preferences/Python interpreter 
+EX: C:/Users/jrab9/.virtualenvs/2023_WDI_ts_GDP_forecasting-lA220SuF/Scripts/python.exe
+
+Using spyder its possible to require installing "spyder-kernels==XXX.*" in this particular case, the version was 2.4.* (trough pipenv install spyder-kernels==2.4.*)
+
+Where the given folder is where the PipEnv was installed locally.
+
+*Libraries:*
+
+* PyYAML
+* wbgapi
+
+
+##  03. ETL Process
+### I. Extraction:
+The project main data source is the WDI API 'https://api.worldbank.org/v2/countries/all/indicators/', but there is a python package to access easily to the data which is [WBGAPI](https://pypi.org/project/wbgapi/)
+
+*Filters:*
+Countries: In the dabase we can find 5 Income Categories, to reduce the number of countries we are only going to work with low to High categories.
+			['Low income', 'Upper middle income', 'Others', 'Lower middle income', 'High income']
+
+*Considerations:*
+The Extract process delivered one file:
+* data.csv.gz: this dataset contains the values with NULL imputed with 0's for each indicators in the given periods and a variable called 'value_isna' wich contains a boolean wich indicates that the value was originally a NULL
+
+The extraction functions are contains in ./src/etl_extract.py
+
+The period selected starts in 1991 to get the Germany data from it last reunification due that Germany is one of the main economies and can play an important role in the analysis.
+
+
+### II. Transform:
+Thinking in future analysis coming from this bases, the project will store all the variables but due to the high number of NULL or NULL values in the source for other indicators but GDP, only GDP and other features to be created from itself will be taken into account to the forecast.
+
+*Filters:*
+
+*Considerations:*
+The Extract process delivered two files:
+* ft_wdi: contains the indicators data with NULL imputed with 0
+* ft_nas: contains booleans to identify if the value respond to a NULL (TRUE) or not (FALSE)
+
+
+
+
+
+
+
+
+
 
 
 
