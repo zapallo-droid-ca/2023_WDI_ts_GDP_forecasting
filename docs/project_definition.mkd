@@ -103,6 +103,7 @@ Given the requirements for the analysis the design of data structure will be wit
 
 Version: 1.0 - Preliminar Design (Planned)
 
+```mermaid renderAs=mermaid
 erDiagram
     dim_country ||--o{ ft_wdi
     dim_country {
@@ -156,6 +157,6 @@ erDiagram
 		boolean remittances_%GDP
 		boolean services_%GDP
     }
-
+```
 
 
