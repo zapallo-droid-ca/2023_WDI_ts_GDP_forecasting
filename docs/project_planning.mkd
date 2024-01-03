@@ -47,16 +47,16 @@ gantt
        title PROJECT PLAN
 
        section DOCUMENTATION
-       PROJECT DEFINITION            :crit,      done, des01, 2023-12-21 , 1d
+       PROJECT DEFINITION            :crit,      done, des01, 2024-01-01 , 1d
 	   project_definition.mkd        :milestone, done,        after des01, 0d
        PROJECT PLANNING              :crit,      done, des02, after des01, 1d
 	   project_planning.mkd          :milestone, done,        after des02, 0d
-       PROJECT NOTEBOOK              :active,  		   des03, after des02, 2023-12-31
+       PROJECT NOTEBOOK              :active,  		   des03, after des02, 10d
 	   project_notebook.mkd			 :milestone,            , after des03, 0d
-       EXECUTIVE REPORT              :crit,            des04, after des02, 2023-12-31
+       EXECUTIVE REPORT              :crit,            des04, after des02, 10d
 	   executive_report.pptx         :milestone,            , after des04, 0d
-	   PROJECTPEDIA					 :			 	   des14, after des02
-	   project_pedia.mkd			 :milestone, 	        , after des13
+	   PROJECTPEDIA					 :			 	   des14, after des02, 10d
+	   project_pedia.mkd			 :milestone, 	        , after des14, 0d
 
        section ETL
        EXTRACTION FUNCTION DEV. 	 :crit, active,    des05, after des02, 1d
