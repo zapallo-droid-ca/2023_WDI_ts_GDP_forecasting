@@ -7,9 +7,6 @@
 |    2.0    |   Data Anlayst  |    mm/dd/yy   |    End User   |    mm/dd/yy   | Definitive  |
 
 
-## Executive summary
-TBD
-
 ## Overview
 TBD
 
@@ -30,16 +27,16 @@ Developing of deliverables resources specified in "Schedule" section based on th
 
 ## Schedule
 
-| *PHASE*                 | *DELIVERABLE*                                            | *HS PLANNED* | *HS REAL* |
-| :---------------------: | :------------------------------------------------------: | :----------: | :-------: |
-| Project Definition      | project_definition.mkd                                   | 3:00 hs      | 1:30 hs   |
-| Business Understanding  | project_planning.mkd                                     | 2:00 hs      | 1:50 hs   |
-| Data Understanding      | etl.py / eda.ipynb / descriptive_analysis.pbix           | 12:00 hs     |           |
-| Data Preparation        | df.csv.gz / datamart.db                                  | 4:00 hs      |           |
-| Modeling                | train.py                                                 | 12:00 hs     |           |
-| Evaluation              | test.py / models_summary.xlsx                            | 4:00 hs      |           |
-| Deployment              | executive_report.pptx / prod.pbix / project_notebook.mkd | 8:00 hs      |           | 
-|                         |                                                 *TOTAL:* | 45:00 hs     |           |
+| *PHASE*                 | *DELIVERABLE*                                                                              | *HS PLANNED* | *HS REAL* |
+| :---------------------: | :----------------------------------------------------------------------------------------: | :----------: | :-------: |
+| Project Definition      | project_definition.mkd                                                                     | 3:00 hs      | 1:30 hs   |
+| Business Understanding  | project_planning.mkd                                                                       | 2:00 hs      | 1:50 hs   |
+| Data Understanding      | etl.py / eda.ipynb / descriptive_analysis.pbix                                             | 12:00 hs     |           |
+| Data Preparation        | df.csv.gz / datamart.db                                                                    | 4:00 hs      |           |
+| Modeling                | train.py                                                                                   | 12:00 hs     |           |
+| Evaluation              | test.py / models_summary.xlsx                                                              | 4:00 hs      |           |
+| Deployment              | executive_report.pptx / prod.pbix / project_notebook.mkd / projectpedia.mkd                | 8:00 hs      |           | 
+|                         |                                                                                   *TOTAL:* | 45:00 hs     |           |
 
 ```mermaid renderAs=mermaid
 gantt
@@ -107,20 +104,21 @@ Cost unit: Hs of an analyst with propper hardware
 
 ## Deliverables
 
-| Deliverable                | Description | Person Responsible |
-| :------------------------: | :---------: | :----------------: |
-| project_planning.mkd       |             | Data Analyst       |
-| project_definition.mkd     |             | Data Analyst       |
-| etl.py                     |             | Data Analyst       |
-| descriptive_analysis.pbix  |             | Data Analyst       |
-| df.csv.gz                  |             | Data Analyst       |
-| train.py                   |             | Data Analyst       |
-| test.py                    |             | Data Analyst       |
-| models_summary.xlsx        |             | Data Analyst       |
-| executive_report.pptx      |             | Data Analyst       |
-| prod.pbix                  |             | Data Analyst       |
-| project_notebook.mkd       |             | Data Analyst       |
-| project_pedia.mkd          |             | Data Analyst       |
+| Deliverable                | Description                                                                   | Person Responsible |
+| :------------------------: | :---------------------------------------------------------------------------: | :----------------: |
+| project_planning.mkd       | Project schedule                                                              | Data Analyst       |
+| project_definition.mkd     | Project scope and main definitions                                            | Data Analyst       |
+| etl.py                     | Script with ETL process, the main functions will be in other scripts into SRC | Data Analyst       |
+| descriptive_analysis.pbix  | Dashboard with Descriptive Analysis                                           | Data Analyst       |
+| df.csv.gz                  | Main DataFrame in .csv.gz format to be used in moddeling                      | Data Analyst       |
+| datamart.db  		     | Database with etl product                                                     | Data Analyst
+| train.py                   | Script with Train process                                                     | Data Analyst       |
+| test.py                    | Script with Test process                                                      | Data Analyst       |
+| models_summary.xlsx        | Summary report with models main results                                       | Data Analyst       |
+| executive_report.pptx      | Executive report and results presentation                                     | Data Analyst       |
+| prod.pbix                  | Dashboard with Descriptive and Predictive Analysis                            | Data Analyst       |
+| project_notebook.mkd       | Project notes during development, development diary                           | Data Analyst       |
+| project_pedia.mkd          | Conceptual framework                                                          | Data Analyst       |
 
 
 ## References and external resources
