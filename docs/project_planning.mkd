@@ -55,6 +55,8 @@ gantt
 	   project_notebook.mkd			 :milestone,            , after des03, 0d
        EXECUTIVE REPORT              :crit,            des04, after des02, 2023-12-31
 	   executive_report.pptx         :milestone,            , after des04, 0d
+	   PROJECTPEDIA					 :			 	   des14, after des02
+	   project_pedia.mkd			 :milestone, 	        , after des13
 
        section ETL
        EXTRACTION FUNCTION DEV. 	 :crit, active,    des05, after des02, 1d
