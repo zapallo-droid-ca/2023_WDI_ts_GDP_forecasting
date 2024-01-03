@@ -120,6 +120,7 @@ Cost unit: Hs of an analyst with propper hardware
 | executive_report.pptx      |             | Data Analyst       |
 | prod.pbix                  |             | Data Analyst       |
 | project_notebook.mkd       |             | Data Analyst       |
+| project_pedia.mkd          |             | Data Analyst       |
 
 
 ## References and external resources
