@@ -26,7 +26,7 @@ where: wd should be the work directory where the project will be hosted.
 
 in every work session with python the cmd console will be open and setted to operate with the Virtual Environment and the python interpreter will be setted with the same PipEnv.
 
-I use to working with Spyder so, in the following direction of spyder is possible to select the virtual environment python.exe from a given folder Tools/Preferences/Python interpreter 
+I use to working with Spyder so, in the following direction of spyder is possible to select the virtual environment python.exe from a given folder Tools/Preferences/Python interpreter  <br>
 EX: C:/Users/jrab9/.virtualenvs/2023_WDI_ts_GDP_forecasting-lA220SuF/Scripts/python.exe
 
 Using spyder its possible to require installing "spyder-kernels==XXX.*" in this particular case, the version was 2.4.* (trough pipenv install spyder-kernels==2.4.*)
@@ -37,6 +37,7 @@ Where the given folder is where the PipEnv was installed locally.
 
 * PyYAML
 * wbgapi
+* scikit-learn
 
 
 ##  03. ETL Process
@@ -62,9 +63,15 @@ Thinking in future analysis coming from this bases, the project will store all t
 *Filters:*
 
 *Considerations:*
-The Extract process delivered two files:
-* ft_wdi: contains the indicators data with NULL imputed with 0
+The Transform process delivered three base files:
+* ft_wdi: contains the indicators data with NULL imputed with 0 and the Time Series Components of the Target variable (To be use in BI Dashboards)
 * ft_nas: contains booleans to identify if the value respond to a NULL (TRUE) or not (FALSE)
+* ft_tsd: contains the target variable, dummies and others from Feature engineering, to be used in the forecasting process.
+
+The Transform process scripts are divided by transformation type:
+* etl_transform_TS.py: contains the functions to handle Time Series
+* etl_transform.py: contains the general functions such dummies creation
+* etl_transform_FE.py: contains the feature engineering instructions for moddeling
 
 
 

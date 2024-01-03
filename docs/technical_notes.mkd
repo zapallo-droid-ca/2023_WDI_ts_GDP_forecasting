@@ -1,0 +1,20 @@
+# TECHNICAL NOTES
+
+# Version History
+| Version # | Implemented By  | Revision Date |  Approved By  | Approval Date |    Reason   |
+| :-------: | :-------------: | :-----------: | :-----------: | :-----------: | :---------: |
+|    1.0    |   Data Anlayst  |    mm/dd/yy   |    End User   |    mm/dd/yy   | Preliminar  |
+|    2.0    |   Data Anlayst  |    mm/dd/yy   |    End User   |    mm/dd/yy   | Definitive  |
+
+## 01. Document Pourpuse:* To consolidate the main coding features as guidance.
+
+## 02.Python
+### 02.01. ETL
+
+*Pivot Combo*: 
+''' 
+df = pd.DataFrame()
+df = df.pivot().reset_index(col_level = ?)
+df.columns = df.columns.droplevel()
+
+'''

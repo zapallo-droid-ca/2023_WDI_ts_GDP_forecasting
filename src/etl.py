@@ -8,33 +8,105 @@ import requests
 import json
 import sqlite3
 
+### Custom Libraries
+
+from src import etl_extract, etl_qa, etl_transform, etl_transform_TS, etl_transform_FE
+
 ## Work Directory
-wd = os.getcwd()
+wd = os.getcwd().replace('\src','\\')
 
-from src import etl_extract
+## General configuration
+number_of_lags = 4
+range_min = 1987 #1987 considering loosing 4 observations in TSD by period = number_of_lags
+range_max = 2022
 
-data, dim_country = etl_extract.wdi_extract(wd, range_min = 1991, range_max = 2022)
+# Variables in lag creation:
+lags_level = True
+lags_trend = True
+lags_seasonal = True
+lags_residual = True
 
-
-#Pivot and NAS dataset creation
-ft_nas = data.pivot(index = ['economy','time'], columns = ['col_name'], values = ['value_isna']).reset_index(col_level = 1)
-ft_nas.columns = ft_nas.columns.droplevel()
-
-ft_wdi = data.pivot(index = ['economy','time'], columns = ['col_name'], values = ['value']).reset_index(col_level = 1)
-ft_wdi.columns = ft_wdi.columns.droplevel()
-
-#Dummies
-ft_wdi['finantial_crisis'] = (ft_wdi.time >= 2007) & (ft_wdi.time <= 2008)
-ft_wdi['pandemic'] = (ft_wdi.time >= 2020) & (ft_wdi.time <= 2023)
-
-#TSD
+#Number of differenciations (periods of pd.dataframe.shift())
+shift_value = 1
 
 
+#-- ETL: Extract
+data, dim_country = etl_extract.wdi_extract(wd, range_min = range_min, range_max = range_max) 
 
 
 
+##-- ETL: Transform
+
+##--- 1: base dataframes
+ft_wdi, ft_nas = etl_extract.base_data(wd = wd, nas_df = True)
+
+#QA
+etl_qa.time_range_complete(df = ft_wdi, category_var = 'economy', time_var = 'time')
 
 
-#INCLUIR: TSD
+##--- 2: TSD
+#Getting Data
+ft_tsd = ft_wdi[['economy', 'time', 'GDP_USD']].copy().sort_values(['economy','time'], ascending = True)
+ft_tsd.set_index(pd.to_datetime(ft_tsd['time'], format = '%Y',), inplace = True)
+
+
+ft_tsd = etl_transform_TS.tsDecomposition(data = ft_tsd, index_frequency = 'YS', period = number_of_lags, #Taking a seasonal period equivalent to number_of_lags
+                                          target = 'GDP_USD', category = 'economy', sub_category = None, 
+                                          sdModel = 'additive', two_sided = False)
+
+ft_tsd['date'] = ft_tsd['date'].dt.year
+ft_tsd.columns = ft_tsd.columns.str.replace('date','time')
+
+#Join TSD with WDI base
+ft_tsd_temp = ft_tsd[['time','economy','trend','seasonal','residual']].copy()
+ft_tsd_temp.columns = ['time','economy','GDP_USD_trend','GDP_USD_seasonal','GDP_USD_residual']
+
+ft_wdi = ft_wdi.merge(ft_tsd_temp, how = 'left', left_on = ['time','economy'], right_on = ['time','economy'])
+del(ft_tsd_temp)
+
+#QA
+etl_qa.time_range_complete(df = ft_tsd, category_var = 'economy', time_var = 'time')
+ft_tsd['level'].sum() == ft_wdi['GDP_USD'].sum()
+ft_tsd.shape[0] == ft_wdi.shape[0]
+
+
+##-- Outliers Detection
+#HAMPEL FILTER FOR TS OUTLIERS  
+ft_tsd, df_eda = etl_transform_TS.hampel_filter(data = ft_tsd, category_var = 'economy', target = ['level','residual'], time_var = 'time', 
+                                                windows_size = number_of_lags, n_sigmas = 3)
+
+##--- 3: Feature Engineering
+##-- Dummies variables
+ft_wdi = etl_transform_FE.dummies_var(df = ft_wdi, time_var = 'time')
+ft_tsd = etl_transform_FE.dummies_var(df = ft_tsd, time_var = 'time')
+df_eda = etl_transform_FE.dummies_var(df = df_eda, time_var = 'time')
+
+##-- GDP Lags
+# Creating variables iterator
+lags_var = set()
+
+if lags_level: 
+    lags_var.update(['level'])
+if lags_trend:
+    lags_var.update(['trend'])
+if lags_seasonal:
+    lags_var.update(['seasonal'])
+if lags_residual:
+    lags_var.update(['residual']) 
+
+# Creating Lags
+ft_tsd = etl_transform_FE.lags_creation_tsd(data = ft_tsd, category = 'economy', index_variable = 'time', lags_var = lags_var,
+                                            category_inter = lags_var, number_of_lags = number_of_lags, shift_value = shift_value)
+
+df_eda = etl_transform_FE.lags_creation_tsd(data = df_eda, category = 'economy', index_variable = 'time', lags_var = lags_var,
+                                            category_inter = lags_var, number_of_lags = number_of_lags, shift_value = shift_value)
+
+
+##--- 4: Data Load
+#Eportar a csv y sqlite ft_tsd, df_eda, ft_wdi, ft_nas, dim_country
+
+        
+    
+    
 
 

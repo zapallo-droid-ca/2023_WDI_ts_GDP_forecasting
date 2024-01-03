@@ -9,6 +9,10 @@ pyyaml = "*"
 wbgapi = "*"
 spyder-kernels = "==2.4.*"
 openpyxl = "*"
+scikit-learn = "*"
+statsmodels = "*"
+fastdtw = "*"
+hampel = "*"
 
 [dev-packages]
 

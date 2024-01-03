@@ -42,10 +42,32 @@ def wdi_extract(wd, range_min = 1991, range_max = 2022):
     
     df.columns = df.columns.str.replace('variable','time')
     
-    df.to_csv('./data/raw/data.csv.gz')
+    df.to_csv(wd + '/data/raw/data.csv.gz', index = False)
     
     return df, dim_country
 
+
+def base_data(wd, nas_df = True):         
+    #Reading again main data but now the extracted raw file
+    import pandas as pd
+    
+    data = pd.read_csv(wd + '/data/raw/data.csv.gz')
+    
+    pivot_index = ['economy','time']
+    pivot_columns = ['col_name']
+    pivot_col_level = 1
+    
+    #Pivot and NAS dataset creation
+    ft_nas = data.pivot(index = pivot_index, columns = pivot_columns, values = ['value_isna']).reset_index(col_level = pivot_col_level)
+    ft_nas.columns = ft_nas.columns.droplevel()
+    
+    ft_wdi = data.pivot(index = pivot_index, columns = pivot_columns, values = ['value']).reset_index(col_level = pivot_col_level)
+    ft_wdi.columns = ft_wdi.columns.droplevel()
+    
+    if nas_df:
+        return ft_wdi, ft_nas
+    else:
+        return ft_wdi
 
 
 
