@@ -15,6 +15,8 @@ def lags_creation_tsd(data, category, index_variable, lags_var, category_inter, 
     
     df_temp = pd.DataFrame()
     
+    created_vars = set()
+    
     for i in category_inter:
         df_temp_iter = data[data[category] == i].sort_values(index_variable,ascending = True)  
     
@@ -22,7 +24,9 @@ def lags_creation_tsd(data, category, index_variable, lags_var, category_inter, 
             for j in lags_var:
                 df_temp_iter[f'{j}_lag_{i}'] = df_temp_iter[j].shift(periods = (shift_value + i))
                 
-        df_temp_iter = df_temp_iter.dropna().reset_index(drop = True)
+                created_vars.update([f'{j}_lag_{i}'])
+                
+        df_temp_iter = df_temp_iter.dropna(subset = list(created_vars)).reset_index(drop = True)
                 
         df_temp = pd.concat([df_temp,df_temp_iter])    
     

@@ -16,8 +16,8 @@ from src import etl_extract, etl_qa, etl_transform, etl_transform_TS, etl_transf
 wd = os.getcwd().replace('\src','\\')
 
 ## General configuration
-number_of_lags = 4
-range_min = 1987 #1987 considering loosing 4 observations in TSD by period = number_of_lags
+number_of_lags = 3
+range_min = 1990
 range_max = 2022
 
 # Variables in lag creation:
@@ -43,6 +43,16 @@ ft_wdi, ft_nas = etl_extract.base_data(wd = wd, nas_df = True)
 #QA
 etl_qa.time_range_complete(df = ft_wdi, category_var = 'economy', time_var = 'time')
 
+#Filter: Main variable / target completition
+ft_wdi['target_completition'] = ft_wdi['GDP_USD'] == 0 #considering that a country GDP should be > 0
+
+#Extracting lost subjects
+etl_log = pd.Series(ft_wdi[ft_wdi['target_completition']]['economy'].unique(), name = 'economy_filtered')
+etl_log.to_csv(wd + '/data/etl/observation_filteres.csv', index = False)
+
+ft_wdi = ft_wdi[ft_wdi['economy'].isin(etl_log) == False].sort_values(['economy','time'], ascending = True).reset_index(drop = True).drop(columns = 'target_completition')
+ft_nas = ft_nas[ft_nas['economy'].isin(etl_log) == False].sort_values(['economy','time'], ascending = True).reset_index(drop = True)
+dim_country = dim_country[dim_country['Country ISO3'].isin(etl_log) == False].sort_values('Country ISO3', ascending = True).reset_index(drop = True)
 
 ##--- 2: TSD
 #Getting Data
@@ -104,8 +114,26 @@ df_eda = etl_transform_FE.lags_creation_tsd(data = df_eda, category = 'economy',
 
 ##--- 4: Data Load
 #Eportar a csv y sqlite ft_tsd, df_eda, ft_wdi, ft_nas, dim_country
+# .csv files
+df_eda.to_csv(wd + '/data/processed/df_eda.csv.gz', index = False)
+ft_tsd.to_csv(wd + '/data/processed/ft_tsd.csv.gz', index = False)
+ft_wdi.to_csv(wd + '/data/processed/ft_wdi.csv.gz', index = False)
+ft_nas.to_csv(wd + '/data/processed/ft_nas.csv.gz', index = False)
+dim_country.to_csv(wd + '/data/final/dim_country.csv.gz', index = False)
 
-        
+
+
+
+
+
+
+
+
+
+
+
+
+
     
     
 
