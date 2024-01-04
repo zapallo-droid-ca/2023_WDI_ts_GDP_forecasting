@@ -25,27 +25,34 @@ This document aims to be a conceptual guide to review the theory behind the main
 
 To make the bibliography revision short, the main consulting sources will be:
 
-* US National Institute of Standards and Technology (NIST) [Engineering Statistics Handbook](https://www.itl.nist.gov/div898/handbook/index.htm) [1]
-* 
+* [1] US National Institute of Standards and Technology (NIST) [Engineering Statistics Handbook](https://www.itl.nist.gov/div898/handbook/index.htm) 
+* [2] Australian Bureau of Statistics [Methods, Classifications, Concepts & Standards. Time Series Analysis: The Basics](https://www.abs.gov.au/websitedbs/D3310114.nsf/home/Time+Series+Analysis:+The+Basics)
+* [3] [Statsmodels Seasonal Decompose](https://www.statsmodels.org/dev/generated/statsmodels.tsa.seasonal.seasonal_decompose.html)
+* [4] [Wicklin Rick, 2021. The Hampel identifier: Robust outlier detection in a time series](https://blogs.sas.com/content/iml/2021/06/01/hampel-filter-robust-outliers.html#:~:text=It%20uses%20robust%20moving%20estimates,known%20as%20the%20Hampel%20filter.)
 
 ## 01. Exploratory Data Analysis
 
 ### 01.01. Time Series Decomposition
 
-A good definition of a Time Series can be found in the [1][Engineering Statistics Handbook](https://www.itl.nist.gov/div898/handbook/pmc/section4/pmc41.htm):
+A good definition of a Time Series can be found in [[1]](https://www.itl.nist.gov/div898/handbook/pmc/section4/pmc41.htm) where the define that
 "A time series is an ordered sequence of values of a variable at equally spaced time intervals".
 
+The time series values are usually called the Time Series "Level" and can have three components which are defined with examples in [[2]](https://www.abs.gov.au/websitedbs/D3310114.nsf/home/Time+Series+Analysis:+The+Basics)
+* Trend (long term direction)
+* Seasonality (systematic, calendar-related movements)
+* Residual (unsystematic, short-term fluctuations)
 
+The decomposition can take different forms but the most used are additive and multiplicative and its selection will depend on the own time series characteristics, coming back to the last cited source, this decision would be made with a graph exam of the original series: 
+"Try a range of models, selecting the one which yields the most stable seasonal component. If the magnitude of the seasonal component is relatively constant regardless of changes in the trend, an additive model is suitable. If it varies with changes in the trend, a multiplicative model is the most likely candidate. However, if the series contains values close or equal to zero, and the magnitude of the seasonal component appears to be dependent upon the trend level, then the pseudo-additive model is most appropriate"
 
-
+In our case, our series could contain values close to or equal to zero due that we are analyzing a large number of series and we can work with additive and multiplicative models in Python statsmodels [[3]](https://www.statsmodels.org/dev/generated/statsmodels.tsa.seasonal.seasonal_decompose.html) the additive model was selected to the decomposition. The ETL have a filter for those observations with at least one 0 in the GDP variable were those observations tags are identified in a csv file. This process can be improved in further iterations of this project, this is one of the reasons that the business domain and data knowledge is important.
 
 ### 01.02. Outliers Detection
 
-
+To make a robust analysis due to the problem dimensionality the Hampel Filter technique [[4]](https://blogs.sas.com/content/iml/2021/06/01/hampel-filter-robust-outliers.html#:~:text=It%20uses%20robust%20moving%20estimates,known%20as%20the%20Hampel%20filter.) has been selected for outliers detection using a rolling MAD with a given window and a defined threshold, basically, this function calculates de Median Absolute Deviation between the rolling median and the value and compares the differences with the threshold (n deviations).
 
 ### 01.03. Stationarity Assumption:
 
 The time series holds the common assumption of "stationary data" to consider before applying many time series techniques, the [Engineering Statistics Handbook](https://www.itl.nist.gov/div898/handbook/pmc/section4/pmc442.htm) defines a stationary process like which has the property that the mean, variance and autocorrelation structure do not change over time and when this assumption is not achieved the time series data can be differenced or subjected to other transformations.
 
 
-sta
