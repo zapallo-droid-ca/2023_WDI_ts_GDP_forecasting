@@ -53,7 +53,7 @@ gantt
        EXECUTIVE REPORT              :crit,            des04, after des02, 10d
 	   executive_report.pptx         :milestone,            , after des04, 0d
 	   PROJECTPEDIA					 :			 	   des14, after des02, 10d
-	   project_pedia.mkd			 :milestone, 	        , after des14, 0d
+	   projectpedia.mkd			 :milestone, 	        , after des14, 0d
 
        section ETL
        EXTRACTION FUNCTION DEV. 	 :crit, active,    des05, after des02, 1d
@@ -118,7 +118,7 @@ Cost unit: Hs of an analyst with propper hardware
 | executive_report.pptx      | Executive report and results presentation                                     | Data Analyst       |
 | prod.pbix                  | Dashboard with Descriptive and Predictive Analysis                            | Data Analyst       |
 | project_notebook.mkd       | Project notes during development, development diary                           | Data Analyst       |
-| project_pedia.mkd          | Conceptual framework                                                          | Data Analyst       |
+| projectpedia.mkd          | Conceptual framework                                                          | Data Analyst       |
 
 
 ## References and external resources
