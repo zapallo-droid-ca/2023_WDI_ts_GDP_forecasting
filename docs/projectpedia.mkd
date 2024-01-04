@@ -1,0 +1,51 @@
+# PROJECTPEDIA
+
+# Version History
+| Version # | Implemented By  | Revision Date |  Approved By  | Approval Date |    Reason   |
+| :-------: | :-------------: | :-----------: | :-----------: | :-----------: | :---------: |
+|    1.0    |   Data Anlayst  |    mm/dd/yy   |    End User   |    mm/dd/yy   | Preliminar  |
+|    2.0    |   Data Anlayst  |    mm/dd/yy   |    End User   |    mm/dd/yy   | Definitive  |
+
+## Overview
+This document aims to be a conceptual guide to review the theory behind the main project characteristics for future revisions.
+
+# Business Domain
+
+
+
+
+
+
+
+
+
+
+
+# Techniques
+
+To make the bibliography revision short, the main consulting sources will be:
+
+* US National Institute of Standards and Technology (NIST) [Engineering Statistics Handbook](https://www.itl.nist.gov/div898/handbook/index.htm) [1]
+* 
+
+## 01. Exploratory Data Analysis
+
+### 01.01. Time Series Decomposition
+
+A good definition of a Time Series can be found in the [1][Engineering Statistics Handbook](https://www.itl.nist.gov/div898/handbook/pmc/section4/pmc41.htm):
+"A time series is an ordered sequence of values of a variable at equally spaced time intervals".
+
+
+
+
+
+### 01.02. Outliers Detection
+
+
+
+### 01.03. Stationarity Assumption:
+
+The time series holds the common assumption of "stationary data" to consider before applying many time series techniques, the [Engineering Statistics Handbook](https://www.itl.nist.gov/div898/handbook/pmc/section4/pmc442.htm) defines a stationary process like which has the property that the mean, variance and autocorrelation structure do not change over time and when this assumption is not achieved the time series data can be differenced or subjected to other transformations.
+
+
+sta
