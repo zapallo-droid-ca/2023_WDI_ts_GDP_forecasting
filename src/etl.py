@@ -2,15 +2,14 @@
 
 ## Libraries
 import pandas as pd
-import numpy as np
+#import numpy as np
 import os
-import requests
-import json
-import sqlite3
+#import requests
+#import json
+#import sqlite3
 
 ### Custom Libraries
-
-from src import etl_extract, etl_qa, etl_transform, etl_transform_TS, etl_transform_FE
+from src import etl_extract, etl_qa, etl_load, etl_transform_TS, etl_transform_FE
 
 ## Work Directory
 wd = os.getcwd().replace('\src','\\')
@@ -54,6 +53,11 @@ ft_wdi = ft_wdi[ft_wdi['economy'].isin(etl_log) == False].sort_values(['economy'
 ft_nas = ft_nas[ft_nas['economy'].isin(etl_log) == False].sort_values(['economy','time'], ascending = True).reset_index(drop = True)
 dim_country = dim_country[dim_country['Country ISO3'].isin(etl_log) == False].sort_values('Country ISO3', ascending = True).reset_index(drop = True)
 
+# dim_calendar
+dim_calendar = pd.DataFrame(ft_wdi.copy()['time'].drop_duplicates().sort_values(ascending = True))
+
+
+
 ##--- 2: TSD
 #Getting Data
 ft_tsd = ft_wdi[['economy', 'time', 'GDP_USD']].copy().sort_values(['economy','time'], ascending = True)
@@ -85,6 +89,8 @@ ft_tsd.shape[0] == ft_wdi.shape[0]
 ft_tsd, df_eda = etl_transform_TS.hampel_filter(data = ft_tsd, category_var = 'economy', target = ['level','residual'], time_var = 'time', 
                                                 windows_size = number_of_lags, n_sigmas = 3)
 
+
+
 ##--- 3: Feature Engineering
 ##-- Dummies variables
 ft_wdi = etl_transform_FE.dummies_var(df = ft_wdi, time_var = 'time')
@@ -112,20 +118,23 @@ df_eda = etl_transform_FE.lags_creation_tsd(data = df_eda, category = 'economy',
                                             category_inter = lags_var, number_of_lags = number_of_lags, shift_value = shift_value)
 
 
+
+
 ##--- 4: Data Load
-#Eportar a csv y sqlite ft_tsd, df_eda, ft_wdi, ft_nas, dim_country
-# .csv files
-df_eda.to_csv(wd + '/data/processed/df_eda.csv.gz', index = False)
-ft_tsd.to_csv(wd + '/data/processed/ft_tsd.csv.gz', index = False)
-ft_wdi.to_csv(wd + '/data/processed/ft_wdi.csv.gz', index = False)
-ft_nas.to_csv(wd + '/data/processed/ft_nas.csv.gz', index = False)
-dim_country.to_csv(wd + '/data/final/dim_country.csv.gz', index = False)
 
+dbpath = '/data/final/datamart.db'
 
+etl_load.dim_country_load(wd = wd, dbpath = dbpath, table_name = 'dim_country', data = dim_country)
 
+etl_load.dim_calendar_load(wd = wd, dbpath = dbpath, table_name = 'dim_calendar', data = dim_calendar)
 
+etl_load.ft_wdi_load(wd = wd, dbpath = dbpath, table_name = 'ft_wdi', data = ft_wdi)
 
+etl_load.ft_tsd_load(wd = wd, dbpath = dbpath, table_name = 'ft_tsd', data = ft_tsd)
 
+etl_load.export_csv(wd = wd, table_name = 'df_eda', data = df_eda)
+
+etl_load.export_csv(wd = wd, table_name = 'ft_nas', data = ft_nas)
 
 
 
