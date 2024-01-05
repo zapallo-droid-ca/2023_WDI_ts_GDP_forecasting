@@ -12,9 +12,8 @@
 ### 02.01. ETL
 
 *Pivot Combo*: 
-''' 
+```
 df = pd.DataFrame()
 df = df.pivot().reset_index(col_level = ?)
 df.columns = df.columns.droplevel()
-
-'''
+```
