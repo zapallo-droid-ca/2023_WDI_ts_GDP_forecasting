@@ -74,23 +74,24 @@ The Transform process scripts are divided by transformation type:
 * etl_transform_FE.py: contains the feature engineering instructions for moddeling
 
 
+##  04. EDA
+### I. Jupyter Notebook:
 
 
 
+### II. Power BI:
+Due that we are working with SQLite and in this project SQL is not too relevant, even when we have a sql database the source of the PBI will be .csv.gz files considering the level of compression that the formats give us. Working with Gzip files is possible in Power BI but decrompressing it in the M editor:
 
+```
+let
+    Source = File.Contents(data_root & "dim_country.csv.gz"),
+    #"Source_decompressed" = Binary.Decompress(Source, Compression.GZip),
+    #"Source_loaded" = Csv.Document(#"Source_decompressed", [Delimiter = ";", QuoteStyle=QuoteStyle.None])
 
-
-
-
-
-
-01. Setting Virtual Environment
-02. Creating ETL code using Python and SQLite
-03. Exporting 
-00. Defining the ML framework to tracking all the experiments (PYTHON)
-
-
-
+in
+    #"Source_loaded"
+```
+In this case we are working with parameters to make the file path dynamic.
 
 
 
@@ -102,7 +103,7 @@ The Transform process scripts are divided by transformation type:
 
 Reference Articles:
 
-[](https://jadangpooiling.medium.com/crisp-dm-methodology-with-python-model-deployment-using-flask-included-classification-case-33b9e184f4e7)
-[](https://github.com/patiegm/Datasci_Resources/blob/master/CRISP-DM%20Analysis%20Template.ipynb)
-[](https://medium.com/@leandroscarvalho/data-product-canvas-a-practical-framework-for-building-high-performance-data-products-7a1717f79f0)
-[](https://swiss-sdi.ch/193/business-data-science-canvas/)
+[1](https://jadangpooiling.medium.com/crisp-dm-methodology-with-python-model-deployment-using-flask-included-classification-case-33b9e184f4e7)
+[2](https://github.com/patiegm/Datasci_Resources/blob/master/CRISP-DM%20Analysis%20Template.ipynb)
+[3](https://medium.com/@leandroscarvalho/data-product-canvas-a-practical-framework-for-building-high-performance-data-products-7a1717f79f0)
+[4](https://swiss-sdi.ch/193/business-data-science-canvas/)
