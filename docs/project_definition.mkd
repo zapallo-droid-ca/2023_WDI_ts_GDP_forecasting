@@ -3,16 +3,13 @@
 # Version History
 | Version # | Implemented By  | Revision Date |  Approved By  | Approval Date |    Reason   |
 | :-------: | :-------------: | :-----------: | :-----------: | :-----------: | :---------: |
-|    1.0    |   Data Anlayst  |    mm/dd/yy   |    End User   |    mm/dd/yy   | Preliminar  |
-|    2.0    |   Data Anlayst  |    mm/dd/yy   |    End User   |    mm/dd/yy   | Definitive  |
+|    1.0    |   Data Anlayst  |    mm/dd/yy   |    End User   |   2024/01/04  | Preliminar  |
+|    2.0    |   Data Anlayst  |    mm/dd/yy   |    End User   |       TBD     | Definitive  |
 
 ## KEY CONCEPTS:
 
 [GDP](https://databank.worldbank.org/reports.aspx?source=2&type=metadata&series=NY.GDP.MKTP.CD): Gross Domestic Product, monetary measure of market value considering all the final goods and services produced by country in a given time period. <br>
 [WDI](https://datatopics.worldbank.org/world-development-indicators/): World Bank World Development Indicators, compilation of relevant comparable statistics about global development and the fight against poverty. <br>
-
-## SUMMARY:
-TBD
 
 ## DEFINITIONS:
 
@@ -91,7 +88,7 @@ VI. Evaluation and partial selection (among Classic Models)
 * GRU (Deep Learning)
 
 *EVALUATION METRICS:*
-Aiming a better comprehension among the Stackeholders and considering that the problem is related to time series the evaluation metric proposed is MAPE and the ideal average yearly value shall be <= 10%
+Aiming a better comprehension among the Stackeholders and considering that the problem is related to time series the evaluation metric proposed is MAPE and the ideal average yearly value shall be <= 20%, this is not a great performance ratio but this project can be consider as the first iteration of the process, if the results makes sense a deeply analysis could be developed with a bounded scope, to make the main 10 time series forecasting more accurate.
 
 *DEPLOYMENT RESOURCES:*
 Executive Report (.pptx)
@@ -99,69 +96,7 @@ Executive Summary (.pbix)
 Project documents (.mkd)
 
 *DATAMART DESIGN:*
-Given the requirements for the analysis the design of data structure will be with a low normalization degree, only taking separated the country data as dimensions from the fact tables, and an auxiliar fact table will be created to hold the real NULL's vaues identified with Booleans
+Given the requirements for the analysis the design of data structure will be with a low normalization degree, only taking separated the country and time data as dimensions from the main fact table 'ft_wdi'. Another table will be created called 'ft_tsd' with a similar structure as 'ft_wdi' but filtered and only with the variables to be included into the models.
 
 Version: 1.0 - Preliminar Design (Planned)
-
-
-```mermaid renderAs=mermaid
----
-title: Basic Data Structure-ERD
----
-erDiagram
-    dim_country ||--o{ ft_wdi : "1-*"
-    dim_country {
-        string code
-		string iso3
-		string name
-		string long_name 
-        string income_group
-		string region
-		string currency_name
-    }
-    ft_wdi {
-        string country_iso3
-		int time
-		float GDP_USD
-		float GINI_per_capita
-		float acapital_formation_%GDP
-		float account_balance_%GDP
-		float agriculture_%GDP
-		float consumer_price_idx_b2010
-		float consumption_%GDP, exports_%GD
-		float foreign_investment_%GDP
-		float gross_savings_%GDP
-		float imports_%GDP
-		float industry_%GDP
-		float population
-		float remittances_%GDP
-		float services_%GDP
-		boolean finantial_crisis
-		boolean pandemic
-		float GDP_USD_trend
-		float GDP_USD_seasonal
-		float GDP_USD_residual
-    }
-    ft_nas }o--|| dim_country : "1-* Auxiliar table"
-    ft_nas {
-        string country_iso3
-		int time
-		boolean GDP_USD
-		boolean GINI_per_capita
-		boolean acapital_formation_%GDP
-		boolean account_balance_%GDP
-		boolean agriculture_%GDP
-		boolean consumer_price_idx_b2010
-		boolean consumption_%GDP, exports_%GD
-		boolean foreign_investment_%GDP
-		boolean gross_savings_%GDP
-		boolean imports_%GDP
-		boolean industry_%GDP
-		boolean population
-		boolean remittances_%GDP
-		boolean services_%GDP
-    }
-	
-```
-
-
+![image](https://github.com/zapallo-droid-ca/2023_WDI_ts_GDP_forecasting/assets/134946259/4b16393d-946e-48b8-8624-4deb0f9ea2e2)
