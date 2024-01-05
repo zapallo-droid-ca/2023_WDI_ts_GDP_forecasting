@@ -3,12 +3,12 @@
 # Version History
 | Version # | Implemented By  | Revision Date |  Approved By  | Approval Date |    Reason   |
 | :-------: | :-------------: | :-----------: | :-----------: | :-----------: | :---------: |
-|    1.0    |   Data Anlayst  |    mm/dd/yy   |    End User   |    mm/dd/yy   | Preliminar  |
-|    2.0    |   Data Anlayst  |    mm/dd/yy   |    End User   |    mm/dd/yy   | Definitive  |
+|    1.0    |   Data Anlayst  |    mm/dd/yy   |    End User   |   2024/01/04  | Preliminar  |
+|    2.0    |   Data Anlayst  |    mm/dd/yy   |    End User   |       TBD     | Definitive  |
 
 
 ## Overview
-TBD
+The project would be done using 41 hs between the 2024-01-01 and the 2024-01-13 delivering a hole project structure with partial milestones and reporting deliverables to be consumed into a high or executive level and a low or technical level.
 
 ## Scope
 Developing of deliverables resources specified in "Schedule" section based on the project objective and Key Activities
