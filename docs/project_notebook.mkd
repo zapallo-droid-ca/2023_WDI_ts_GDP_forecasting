@@ -78,7 +78,7 @@ The Transform process scripts are divided by transformation type:
 * **Dummies:** Booleans identifying Pandemic and financial crsis 2007-2008
 * **Lags:** Past values of level and time series components, where level = GDP
 * **Outliers:** Boolean variable identifying the presence of ourliers and another variable with the series imputed.
-* **Ranking:** Annual dense ranking based on GDP values (descending)
+* **Ranking:** Annual dense ranking based on GDP and population values (descending), only for descriptive and exploratory data.
 
 
 
