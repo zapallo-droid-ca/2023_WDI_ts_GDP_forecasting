@@ -98,5 +98,6 @@ Project documents (.mkd)
 *DATAMART DESIGN:*
 Given the requirements for the analysis the design of data structure will be with a low normalization degree, only taking separated the country and time data as dimensions from the main fact table 'ft_wdi'. Another table will be created called 'ft_tsd' with a similar structure as 'ft_wdi' but filtered and only with the variables to be included into the models.
 
-Version: 1.0 - Preliminar Design (Planned)
-![image](https://github.com/zapallo-droid-ca/2023_WDI_ts_GDP_forecasting/assets/134946259/4b16393d-946e-48b8-8624-4deb0f9ea2e2)
+Version: 2.0 - Preliminar Design (Final)
+![image](https://github.com/zapallo-droid-ca/2023_WDI_ts_GDP_forecasting/assets/134946259/f32e493f-0f49-4f8c-8275-1ad79dee2fd6)
+
