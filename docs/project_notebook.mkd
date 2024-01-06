@@ -16,11 +16,11 @@ At the begining of the project, only the main idea was clear so, the project sta
 ## 02. Virtual Environment Setting:
 Before starting the ETL process, a virtual environment will be created to handle the project:
 
-'''
+```
 cmd console: cd wd
 cdm console: pipenv install
 cmd console: pipenv shell (for installing libraries and packages) or pipenv run to activate the project
-'''
+```
 
 where: wd should be the work directory where the project will be hosted.
 
@@ -54,13 +54,14 @@ The Extract process delivered one file:
 
 The extraction functions are contains in ./src/etl_extract.py
 
-The period selected starts in 1991 to get the Germany data from it last reunification due that Germany is one of the main economies and can play an important role in the analysis.
+The period selected starts in 1990 to get the Germany data from it last reunification due that Germany is one of the main economies and can play an important role in the analysis.
 
 
 ### II. Transform:
 Thinking in future analysis coming from this bases, the project will store all the variables but due to the high number of NULL or NULL values in the source for other indicators but GDP, only GDP and other features to be created from itself will be taken into account to the forecast.
 
 *Filters:*
+The process contains a function to filer the countries with incomplete data range which exports a .csv stored in ./data/etl/ with the ommited countries listed to further analysis.
 
 *Considerations:*
 The Transform process delivered three base files:
@@ -70,8 +71,15 @@ The Transform process delivered three base files:
 
 The Transform process scripts are divided by transformation type:
 * etl_transform_TS.py: contains the functions to handle Time Series
-* etl_transform.py: contains the general functions such dummies creation
 * etl_transform_FE.py: contains the feature engineering instructions for moddeling
+
+*Main Transformations:*
+* **Time Series Decomposition:** Time series components extraction, trend, seasonal and residual
+* **Dummies:** Booleans identifying Pandemic and financial crsis 2007-2008
+* **Lags:** Past values of level and time series components, where level = GDP
+* **Outliers:** Boolean variable identifying the presence of ourliers and another variable with the series imputed.
+* **Ranking:** Annual dense ranking based on GDP values (descending)
+
 
 
 ##  04. EDA
