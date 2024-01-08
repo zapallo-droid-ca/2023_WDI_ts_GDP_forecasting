@@ -117,8 +117,8 @@ Developing of deliverables resources specified in "Schedule" section based on th
 | *PHASE*                 | *DELIVERABLE*                                                                              | *HS PLANNED* | *HS REAL* |
 | :---------------------: | :----------------------------------------------------------------------------------------: | :----------: | :-------: |
 | Project Definition      | project_definition.mkd                                                                     | 3:00 hs      | 2:00 hs   |
-| Business Understanding  | project_definition.mkd                                                                        | 2:00 hs      | 2:15 hs   |
-| Data Understanding      | etl.py / eda.ipynb                                              | 12:00 hs     | 8:00 hs   |
+| Business Understanding  | project_definition.mkd                                                                     | 2:00 hs      | 2:15 hs   |
+| Data Understanding      | etl.py / eda.ipynb                                                                         | 12:00 hs     | 16:00 hs  |
 | Data Preparation        | df.csv.gz / datamart.db                                                                    | 4:00 hs      | 1:00 hs   |
 | Modeling                | train.py                                                                                   | 12:00 hs     |           |
 | Evaluation              | test.py / models_summary.xlsx                                                              | 4:00 hs      |           |
@@ -152,11 +152,11 @@ gantt
 	   df.csv.gz	                 :milestone, done  , after des08, 0d
 
        section ANALYSIS AND MODELING
-       EXPLORATORY DATA ANALYSIS     :crit, active,            des09, after des08, 1d
-	   eda.ipynb                     :milestone, active         , after des09, 0d
-	   PRE-PROCESSING FUNCTIONS DEV. :crit,            des10, after des09, 1d
-	   PREDICTIVE DATA ANALYSIS      :crit,            des11, after des09, 2d
-	   train.py                      :milestone,            , after des11, 0d
+       EXPLORATORY DATA ANALYSIS     :crit, done,            des09, after des08, 1d
+	   eda.ipynb                     :milestone, done         , after des09, 0d
+	   PRE-PROCESSING FUNCTIONS DEV. :crit, active           des10, after des09, 1d
+	   PREDICTIVE DATA ANALYSIS      :crit, active           des11, after des09, 2d
+	   train.py                      :milestone, active           , after des11, 0d
 	   MODELS EVALUATION             :crit,            des12, after des10, 1d
 	   test.py                       :milestone,            , after des12, 0d
 	   models_summary.xlsx           :milestone,            , after des12, 0d
