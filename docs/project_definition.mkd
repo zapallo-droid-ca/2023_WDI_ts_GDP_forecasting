@@ -13,16 +13,16 @@
 
 ## DEFINITIONS:
 
-*PROBLEM DESCRIPTION:* The project aims to emulate an hypotetic situation where an organization has request to identify the top 10 countries by GDP in a 10 years horizont to answer the main question, among the top 10 economies, what would be the best countries to invest in taking into the account the information given by the 15 avaiable WDI.
+*PROBLEM DESCRIPTION:* The project aims to emulate an hypotetic situation where an organization has request to identify the top 10 countries by GDP at the end of the decade (2030) to answer the main question, among the top 10 economies, considering the information given by the avaiable data.
 
-*BUSINESS REQUIREMENT:* To detect the potencial top 10 Countries by GDP in a 10 years horizont highligthing the most relevant changes from the baseline.
+*BUSINESS REQUIREMENT:* To detect the potencial top 10 Countries by GDP at the end of the decade (2030) highligthing the most relevant changes from the baseline.
 
-*OBJECTIVE:* To achive an average MAPE of <= 10% in the forecasting of 10 years GDP values to identify the top 10 economies in the given time horizont
+*OBJECTIVE:* To achive an average MAPE of <= 20% in the forecasting of GDP values to identify the top 10 economies in the given time horizont. (20% considering the incertainty level caused by the last global crisis) 
 
 *KEY ACTIVITIES:*
 * Characterize the countries by the given metrics.
-* 10 years forecasting of GDP indicator.
-* Analyze the GDP indicator by country in a 10 years horizon giving to the analysis contextual information from others WDI
+* 2030 forecasting of GDP indicator.
+* Analyze the GDP indicator by country the given horizon considering contextual information.
 * Detect the main changes among the countries ranking between the baseline and the target horizon.
 
 ## DATA SOURCES:
