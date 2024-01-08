@@ -101,3 +101,108 @@ Given the requirements for the analysis the design of data structure will be wit
 Version: 2.0 - Preliminar Design (Final)
 ![image](https://github.com/zapallo-droid-ca/2023_WDI_ts_GDP_forecasting/assets/134946259/f32e493f-0f49-4f8c-8275-1ad79dee2fd6)
 
+
+# PROJECT PLANNING:
+
+## Overview
+The project would be done using 41 hs between the 2024-01-01 and the 2024-01-13 delivering a hole project structure with partial milestones and reporting deliverables to be consumed into a high or executive level and a low or technical level.
+
+## Scope
+Developing of deliverables resources specified in "Schedule" section based on the project objective and Key Activities
+
+<div style="page-break-after: always;"></div>
+
+## Schedule
+
+| *PHASE*                 | *DELIVERABLE*                                                                              | *HS PLANNED* | *HS REAL* |
+| :---------------------: | :----------------------------------------------------------------------------------------: | :----------: | :-------: |
+| Project Definition      | project_definition.mkd                                                                     | 3:00 hs      | 2:00 hs   |
+| Business Understanding  | project_definition.mkd                                                                        | 2:00 hs      | 2:15 hs   |
+| Data Understanding      | etl.py / eda.ipynb                                              | 12:00 hs     | 8:00 hs   |
+| Data Preparation        | df.csv.gz / datamart.db                                                                    | 4:00 hs      | 1:00 hs   |
+| Modeling                | train.py                                                                                   | 12:00 hs     |           |
+| Evaluation              | test.py / models_summary.xlsx                                                              | 4:00 hs      |           |
+| Deployment              | executive_report.pptx / project_notebook.mkd / projectpedia.mkd                | 8:00 hs      |           | 
+|                         |                                                                                   *TOTAL:* | 45:00 hs     |           |
+
+```mermaid renderAs=mermaid
+gantt
+       dateFormat  YYYY-MM-DD
+       title PROJECT PLAN
+
+       section DOCUMENTATION
+       PROJECT DEFINITION            :crit,      done, des01, 2024-01-01 , 1d
+	   project_definition.mkd        :milestone, done,        after des01, 0d
+       PROJECT PLANNING              :crit,      done, des02, after des01, 1d
+	   project_definition.mkd          :milestone, done,        after des02, 0d
+       PROJECT NOTEBOOK              :active,  		   des03, after des02, 10d
+	   project_notebook.mkd			 :milestone,            , after des03, 0d
+       EXECUTIVE REPORT              :crit, active,        des04, after des02, 10d
+	   executive_report.pptx         :milestone,            , after des04, 0d
+       PROJECTPEDIA		     :active,		 	   des14, after des02, 10d
+	   projectpedia.mkd			 :milestone, 	        , after des14, 0d
+
+       section ETL
+       EXTRACTION FUNCTION DEV. 	 :crit, done,    des05, after des02, 1d
+       TRANSFORMATION FUNCTIONS DEV.     :crit, done,    des06, after des02, 2d
+	   LOAD FUNCTIONS DEV.		 :crit, done,    des07, after des05, 2d
+	   etl.py			 :milestone, done,  after des07, 0d
+	   DATAMART DEVELOPMENT (SQLIte) :crit, done,    des08, after des07, 1d
+	   datamart.db                   :milestone, done  , after des08, 0d
+	   df.csv.gz	                 :milestone, done  , after des08, 0d
+
+       section ANALYSIS AND MODELING
+       EXPLORATORY DATA ANALYSIS     :crit, active,            des09, after des08, 1d
+	   eda.ipynb                     :milestone, active         , after des09, 0d
+	   PRE-PROCESSING FUNCTIONS DEV. :crit,            des10, after des09, 1d
+	   PREDICTIVE DATA ANALYSIS      :crit,            des11, after des09, 2d
+	   train.py                      :milestone,            , after des11, 0d
+	   MODELS EVALUATION             :crit,            des12, after des10, 1d
+	   test.py                       :milestone,            , after des12, 0d
+	   models_summary.xlsx           :milestone,            , after des12, 0d
+	   
+	   section DEPLOYMENT
+       FINAL REPORT DEVELOPMENT         :crit,            des13, after des12, 1d
+	   executive_report.pptx                      :milestone,            , after des13, 0d
+	   
+```
+
+
+## Budget
+
+| Budget Item | Cost |     Quantity    | Total Cost |
+| :---------: | :--: | :-------------: | :--------: |
+| Analyst HS  | 1    | 41              | 41         |
+| Hardware HS | 0    | 41              | 0          |
+|             |      | Overall Budget: | 41         |
+
+Cost unit: Hs of an analyst with propper hardware
+
+
+## Roles & Responsibilities
+
+| Team Member  | Role         | Responsibilities                  |
+| :---------:  | :----------: | :-------------------------------: |
+| Data Analyst | Data Analyst | Project Execution E2E             |
+| End User     | End User     | Decision Making based on Insights |
+
+<div style="page-break-after: always;"></div>
+
+## Deliverables
+
+| Deliverable                | Description                                                                   | Person Responsible |
+| :------------------------: | :---------------------------------------------------------------------------: | :----------------: |
+| project_planning.mkd       | Project schedule                                                              | Data Analyst       |
+| project_definition.mkd     | Project scope and main definitions                                            | Data Analyst       |
+| etl.py                     | Script with ETL process, the main functions will be in other scripts into SRC | Data Analyst       |
+| df.csv.gz                  | Main DataFrame in .csv.gz format to be used in moddeling                      | Data Analyst       |
+| datamart.db  		     | Database with etl product                                                     | Data Analyst
+| train.py                   | Script with Train process                                                     | Data Analyst       |
+| test.py                    | Script with Test process                                                      | Data Analyst       |
+| models_summary.xlsx        | Summary report with models main results                                       | Data Analyst       |
+| executive_report.pptx      | Executive report and results presentation                                     | Data Analyst       |
+| project_notebook.mkd       | Project notes during development, development diary                           | Data Analyst       |
+| projectpedia.mkd          | Conceptual framework                                                          | Data Analyst       |
+
+
+
