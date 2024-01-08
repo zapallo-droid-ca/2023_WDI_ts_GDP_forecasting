@@ -123,8 +123,9 @@ def ft_wdi_load(wd, dbpath, table_name, data):
                       GDP_USD_trend NUMERIC, 
                       GDP_USD_seasonal NUMERIC, 
                       GDP_USD_residual NUMERIC,
-                      finantial_crisis BOOLEAN, 
-                      pandemic BOOLEAN,
+                      global_crisis BOOLEAN, 
+                      GDP_USD_rank INTEGER,
+                      population_rank INTEGER,
                       FOREIGN KEY (country_iso3) REFERENCES dim_country(iso3),
                       FOREIGN KEY (time) REFERENCES dim_calendar(time)
                       )
@@ -142,7 +143,7 @@ def ft_wdi_load(wd, dbpath, table_name, data):
     ## LOADING INTO SQL
     data = [tuple(x) for x in data.itertuples(index = False)]
     
-    cursor.executemany(f'INSERT INTO {table_name} VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)', data)
+    cursor.executemany(f'INSERT INTO {table_name} VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)', data)
     print(f'{table_name} loaded')
     
     conn.commit()
@@ -177,8 +178,7 @@ def ft_tsd_load(wd, dbpath, table_name, data):
                       imputed_level NUMERIC, 
                       residual_outlier NUMERIC,                             
                       imputed_residual NUMERIC, 
-                      finantial_crisis NUMERIC, 
-                      pandemic NUMERIC, 
+                      global_crisis NUMERIC,
                       residual_lag_0 NUMERIC,                             
                       trend_lag_0 NUMERIC, 
                       level_lag_0 NUMERIC, 
@@ -208,7 +208,7 @@ def ft_tsd_load(wd, dbpath, table_name, data):
     ## LOADING INTO SQL
     data = [tuple(x) for x in data.itertuples(index = False)]
     
-    cursor.executemany(f'INSERT INTO {table_name} VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)', data)
+    cursor.executemany(f'INSERT INTO {table_name} VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)', data)
     print(f'{table_name} loaded')
     
     conn.commit()

@@ -43,6 +43,7 @@ def wdi_extract(wd, range_min = 1991, range_max = 2022):
     df.columns = df.columns.str.replace('variable','time')
     
     df.to_csv(wd + '/data/raw/data.csv.gz', index = False)
+    dim_country.to_csv(wd + '/data/raw/dim_country.csv.gz', index = False)
     
     return df, dim_country
 
@@ -64,10 +65,13 @@ def base_data(wd, nas_df = True):
     ft_wdi = data.pivot(index = pivot_index, columns = pivot_columns, values = ['value']).reset_index(col_level = pivot_col_level)
     ft_wdi.columns = ft_wdi.columns.droplevel()
     
+    dim_country = pd.read_csv(wd + '/data/raw/dim_country.csv.gz')
+    
+    
     if nas_df:
-        return ft_wdi, ft_nas
+        return ft_wdi, ft_nas, dim_country
     else:
-        return ft_wdi
+        return ft_wdi, dim_country
 
 
 

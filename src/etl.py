@@ -17,7 +17,7 @@ wd = os.getcwd().replace('\src','\\')
 ## General configuration
 number_of_lags = 3
 range_min = 1990
-range_max = 2022
+range_max = 2024
 
 # Variables in lag creation:
 lags_level = True
@@ -31,13 +31,12 @@ shift_value = 1
 
 #-- ETL: Extract
 data, dim_country = etl_extract.wdi_extract(wd, range_min = range_min, range_max = range_max) 
-
+del(data)
 
 
 ##-- ETL: Transform
-
 ##--- 1: base dataframes
-ft_wdi, ft_nas = etl_extract.base_data(wd = wd, nas_df = True)
+ft_wdi, ft_nas, dim_country = etl_extract.base_data(wd = wd, nas_df = True)
 
 #QA
 etl_qa.time_range_complete(df = ft_wdi, category_var = 'economy', time_var = 'time')
@@ -117,6 +116,15 @@ ft_tsd = etl_transform_FE.lags_creation_tsd(data = ft_tsd, category = 'economy',
 df_eda = etl_transform_FE.lags_creation_tsd(data = df_eda, category = 'economy', index_variable = 'time', lags_var = lags_var,
                                             category_inter = lags_var, number_of_lags = number_of_lags, shift_value = shift_value)
 
+# Ranking GDP by Year (dense ranking and columns reordering)
+df_eda = etl_transform_FE.rank_creation(data = df_eda, var_target = 'level' , index_variable = 'time')
+ft_wdi = etl_transform_FE.rank_creation(data = ft_wdi, var_target = 'population' , index_variable = 'time')
+ft_wdi = etl_transform_FE.rank_creation(data = ft_wdi, var_target = 'GDP_USD' , index_variable = 'time')
+
+
+# Growth ratio and Level Diff
+df_eda = etl_transform_FE.pct_growth_tsd(data = df_eda, category = 'economy', index_variable = 'time', var_target = 'level' )
+df_eda = etl_transform_FE.diff_creation_tsd(data = df_eda, category = 'economy', index_variable = 'time', var_target = 'level')
 
 
 
@@ -135,10 +143,6 @@ etl_load.ft_tsd_load(wd = wd, dbpath = dbpath, table_name = 'ft_tsd', data = ft_
 etl_load.export_csv(wd = wd, table_name = 'df_eda', data = df_eda)
 
 etl_load.export_csv(wd = wd, table_name = 'ft_nas', data = ft_nas)
-
-
-
-
 
 
 

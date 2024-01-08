@@ -5,7 +5,7 @@ name = "pypi"
 
 [packages]
 pandas = "*"
-pyyaml = "*"
+pyyaml = "==6.0.1"
 wbgapi = "*"
 spyder-kernels = "==2.4.*"
 openpyxl = "*"
@@ -13,6 +13,11 @@ scikit-learn = "*"
 statsmodels = "*"
 fastdtw = "*"
 hampel = "*"
+bayesian-optimization = "*"
+xgboost = "*"
+prophet = "*"
+numpy = "*"
+schemachange = "==3.5.3"
 
 [dev-packages]
 
