@@ -1,4 +1,4 @@
-#Top 10 Economies in 2030 - Forecasting Analysis
+# Top 10 Economies in 2030 - Forecasting Analysis
 
 Welcome to this project. In this document, you will find the links to navigate to the most important sections of the same.
 
