@@ -87,23 +87,21 @@ The Transform process scripts are divided by transformation type:
 
 
 
-### II. Power BI:
-Due that we are working with SQLite and in this project SQL is not too relevant, even when we have a sql database the source of the PBI will be .csv.gz files considering the level of compression that the formats give us. Working with Gzip files is possible in Power BI but decrompressing it in the M editor:
 
-```
-let
-    Source = File.Contents(data_root & "dim_country.csv.gz"),
-    #"Source_decompressed" = Binary.Decompress(Source, Compression.GZip),
-    #"Source_loaded" = Csv.Document(#"Source_decompressed", [Delimiter = ";", QuoteStyle=QuoteStyle.None])
+##  05. Models
+### I. Preprocessing:
 
-in
-    #"Source_loaded"
-```
-In this case we are working with parameters to make the file path dynamic.
+**Classic Time Series Models (Univariated Analysis):**
+* Extracting autorregressive models components (AR, I, MA)
+* Differenciation of Time Series
+* Variables Scaled
 
 
-
-
+**Machine and Deep Learning (Multivariated Analysis):**
+* Extracting autorregressive models components (AR, I, MA)
+* Differenciation of Time Series
+* Lags Calculation
+* Variables Standardization
 
 
 
