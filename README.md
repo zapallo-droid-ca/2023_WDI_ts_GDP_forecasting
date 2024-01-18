@@ -10,5 +10,5 @@ Index:
 * Executive Report (Work in Progress)
 
 Auxiliary Items:
-* [Project Notebook (Work in Progress)](https://github.com/zapallo-droid-ca/2023_WDI_ts_GDP_forecasting/blob/main/docs/project_notebook.mkd), contains the process highlighted comments by section.
-* [Project-Pedia (Work in Progress)](https://github.com/zapallo-droid-ca/2023_WDI_ts_GDP_forecasting/blob/main/docs/projectpedia.mkd), aims to be a conceptual guide to review the theory behind the main project characteristics for future revisions.
+* Project Notebook (Work in Progress), contains the process highlighted comments by section.
+* Project-Pedia (Work in Progress), aims to be a conceptual guide to review the theory behind the main project characteristics for future revisions.
