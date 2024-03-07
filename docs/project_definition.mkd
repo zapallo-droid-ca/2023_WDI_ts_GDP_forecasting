@@ -82,10 +82,7 @@ VI. Evaluation and partial selection (among Classic Models)
 *FORECASTING TECHNIQUES:*
 * Holt-Winters (Classic)
 * ARIMA (Classic)
-* XGBoost (Machine Learning)
-* Random Forest (Machine Learning)
-* Prophet (Machine Learning)
-* GRU (Deep Learning)
+* **(TBD)**
 
 *EVALUATION METRICS:*
 Aiming a better comprehension among the Stackeholders and considering that the problem is related to time series the evaluation metric proposed is MAPE and the ideal average yearly value shall be <= 20%, this is not a great performance ratio but this project can be consider as the first iteration of the process, if the results makes sense a deeply analysis could be developed with a bounded scope, to make the main 10 time series forecasting more accurate.
@@ -120,8 +117,8 @@ Developing of deliverables resources specified in "Schedule" section based on th
 | Business Understanding  | project_definition.mkd                                                                     | 2:00 hs      | 2:15 hs   |
 | Data Understanding      | etl.py / eda.ipynb                                                                         | 12:00 hs     | 16:00 hs  |
 | Data Preparation        | df.csv.gz / datamart.db                                                                    | 4:00 hs      | 1:00 hs   |
-| Modeling                | train.py                                                                                   | 12:00 hs     |           |
-| Evaluation              | test.py / models_summary.xlsx                                                              | 4:00 hs      |           |
+| Modeling                | train.py                                                                                   | 12:00 hs     | 14:00 hs  |
+| Evaluation              | test.py / models_summary.xlsx                                                              | 4:00 hs      | 6:00 hs   |
 | Deployment              | executive_report.pptx / project_notebook.mkd / projectpedia.mkd                | 8:00 hs      |           | 
 |                         |                                                                                   *TOTAL:* | 45:00 hs     |           |
 
@@ -202,7 +199,7 @@ Cost unit: Hs of an analyst with propper hardware
 | models_summary.xlsx        | Summary report with models main results                                       | Data Analyst       |
 | executive_report.pptx      | Executive report and results presentation                                     | Data Analyst       |
 | project_notebook.mkd       | Project notes during development, development diary                           | Data Analyst       |
-| projectpedia.mkd          | Conceptual framework                                                          | Data Analyst       |
+| projectpedia.mkd           | Conceptual framework                                                          | Data Analyst       |
 
 
 
