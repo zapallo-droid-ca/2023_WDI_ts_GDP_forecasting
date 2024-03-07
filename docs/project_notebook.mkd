@@ -97,7 +97,7 @@ The Transform process scripts are divided by transformation type:
 * Variables Scaled
 
 
-**Machine and Deep Learning (Multivariated Analysis):**
+**Machine and Deep Learning (Multivariated Analysis) (TBD):**
 * Extracting autorregressive models components (AR, I, MA)
 * Differenciation of Time Series
 * Lags Calculation
