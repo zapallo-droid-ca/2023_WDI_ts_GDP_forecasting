@@ -1,173 +1,73 @@
 
-
-
-
-
-
+import warnings
+warnings.filterwarnings("ignore", category=UserWarning)
+warnings.filterwarnings("ignore", category=FutureWarning)
 import pandas as pd
 import numpy as np
-import datetime
+from src import model_pipeline as mpln
 
-from sklearn.preprocessing import StandardScaler, MinMaxScaler
-from sklearn.metrics import mean_absolute_percentage_error
-from sklearn.model_selection import GridSearchCV, ParameterGrid
-from sklearn.metrics import make_scorer
-
-from bayes_opt import BayesianOptimization
-
-from statsmodels.tsa.arima.model import ARIMA
-from statsmodels.tsa.holtwinters import Holt
-
-import xgboost as xgb
-from sklearn.ensemble import RandomForestRegressor
-from prophet import Prophet
-import tensorflow as tf
-from tensorflow import keras
-from tensorflow.keras import Sequential, layers, callbacks
-from tensorflow.keras.layers import Dense, LSTM, Dropout, GRU, Bidirectional
-
-import matplotlib.pyplot as plt
-
-##-- General Functions
-
-#Median Absolute Percentage Error (MAPE)
-def MAPE(y_true, y_pred):
-    return np.mean(np.abs((y_true - y_pred) / y_true)) * 100
-
-
-#Undo Series Diff
-def rebuild_diffed(series, first_element_original):
-    cumsum = series.cumsum()
-    return cumsum.fillna(0) + first_element_original
-
-def grx_train_test(X,Y,target_var):    
-    # Visualize split C1
-    fig,ax= plt.subplots(figsize=(12,3))
-    kws = dict(marker='o')
-    plt.plot(pd.concat([X[target_var],pd.Series(Y[target_var][:1])]), label='Train',**kws)
-    plt.plot(Y[target_var], label='Test',**kws)
-    plt.title('Train / Test Split')
-    ax.legend(bbox_to_anchor=[1,1])
-    plt.show()
-
-#Recursive function
-def predInter(forecast_result, vectFechTest, colsToBoost, test_c, lagsVolVenta, modelo):   
+##-- Reading Data:
+wd = 'C:/Users/jrab9/OneDrive/08.Github/2023_WDI_ts_GDP_forecasting/'
     
-    for i in vectFechTest:    
-        x = test_c[test_c.index == i] 
-        if (lagsVolVenta == 1):        
-            x.vol_venta_l1 = forecast_result.y.iloc[-1]
+df = pd.read_csv(wd + '/data/final/ft_tsd.csv.gz')
+df = df.drop(columns = ['level_lag_0', 'seasonal_lag_0', 'residual_lag_0', 'trend_lag_0', 'level_lag_1', 'seasonal_lag_1',
+                        'residual_lag_1', 'trend_lag_1', 'level_lag_2', 'seasonal_lag_2', 'residual_lag_2', 'trend_lag_2'])
+df = df[['time','country_iso3','level']]
 
-        elif (lagsVolVenta == 2):        
-            x.vol_venta_l1 = forecast_result.y.iloc[-1]
-            x.vol_venta_l2 = forecast_result.y.iloc[-2]
-   
-        elif (lagsVolVenta == 3):   
-            x.vol_venta_l1 = forecast_result.y.iloc[-1]
-            x.vol_venta_l2 = forecast_result.y.iloc[-2]
-            x.vol_venta_l3 = forecast_result.y.iloc[-3]        
+with open(wd + '/data/final/relevant_countries.txt', 'r') as f:
+    relevant_countries = f.readlines()
+f.close()
 
-        forecast_ = modelo.predict(x[colsToBoost])
+relevant_countries = [x.replace('\n','') for x in relevant_countries]
+  
+countries = pd.read_csv(wd + '/data/final/dim_country.csv.gz')[['iso3','name']].drop_duplicates().reset_index(drop = True)
+countries = countries[countries['iso3'].isin(df['country_iso3'].unique())].reset_index(drop = True)
+relevant_countries = countries[countries['iso3'].isin(relevant_countries)].reset_index(drop = True)
 
-        forecast_result = forecast_result.append({'ds': i,
-                                                  'y': forecast_[0],
-                                                  'type': 'pred'}, ignore_index = True)
+countries = list(zip(countries.iloc[:,0],countries.iloc[:,1]))
+relevant_countries = list(zip(relevant_countries.iloc[:,0],relevant_countries.iloc[:,1]))
 
-    forecast_result.set_index(forecast_result.ds, inplace = True)
-    forecast_result.drop(columns = 'ds', inplace = True)
-    forecast_result = forecast_result[forecast_result['type'] == 'pred']
-    return forecast_result
+##-- Preprocessing:
+cols_exclude_preprocess = ['time','country_iso3']
 
-
-
-
-
-
-##------ Parametros
-n_iter = 50
-n_estimators = 150
-cv = 5
-early_stopping_rounds = int(n_iter*0.2)
-random_state = 2292
-
+#PARAMETERS: Datasets
 category_var = 'country_iso3'
-target_var = 'level'
 time_var = 'time'
-
-number_of_diff = 1
+target_var = 'level'
 train_size = 0.7
+forecast_steps = 8
+
+#PARAMETERS: Autoregressive Components (ARIMA)
+lags = 10
+threshold = 0.2
+max_adf_iters = 2
+
+#PARAMETERS HOWI
+iterHowi = np.round(np.arange(0.1, 1.05, 0.05),3) #Range up to 1.05 to evaluate simple and doble exponential smoothing, step of 0.1 is not exhaustive but less cost
+typeHowi = ['add']
+
+#PARAMETERS: Preprocessing
+prep_scaler = True
+scaler_minmax = False
+prep_diff = False
+max_lags_number = 12  #For xgboost
+
+## Modelos
+models_summary = []
+models_results = []
+
+predict_index = list(range(max(df.time)+1,2031))
 
 
-paramCorteNaive = 2
-diferenciado = True
+##--ARIMA
+ models_summary, models_results = mpln.arima_pipe(df = df, countries = countries, prep_scaler = prep_scaler, prep_diff = prep_diff, cols_exclude_preprocess = cols_exclude_preprocess, 
+                                                 time_var = time_var, target_var = target_var, lags = lags, threshold = threshold, max_adf_iters = max_adf_iters, 
+                                                 models_summary = models_summary, models_results = models_results, category_var = category_var, train_size = train_size, 
+                                                 predict_index = predict_index, wd = wd, scaler_minmax = scaler_minmax)
 
-if (diferenciado == True): 
-    strExportDiferenciado = 'diff'
-else:
-    strExportDiferenciado = 'sin_diff'
+##--HOLT-WINTERS
+models_summary, models_results = mpln.howi_pipe(df = df, countries = relevant_countries, prep_scaler = prep_scaler, prep_diff = prep_diff, cols_exclude_preprocess = cols_exclude_preprocess, 
+                                                 time_var = time_var, target_var = target_var, lags = lags, threshold = threshold, max_adf_iters = max_adf_iters, iterHowi = iterHowi, 
+                                                 typeHowi = typeHowi, models_summary = models_summary, models_results = models_results, category_var = category_var, train_size = train_size, 
+                                                 predict_index = predict_index, wd = wd, scaler_minmax = scaler_minmax)
 
-mape_loss = make_scorer(MAPE, greater_is_better=False)
-
-
-df_base = pd.read_csv('data/final/ft_tsd.csv.gz')
-
-df = df_base.copy()
-
-categories_vector = df[category_var].unique()
-
-
-
-##-- Step 1: Filtering
-df = df[df[category_var] == 'USA'].sort_values(time_var, ascending = True).reset_index(drop = True).drop(columns = category_var).copy()
-df.set_index(time_var, inplace = True)
-
-##-- Step 2: Transformations
-#- 2.1: Scaler
-scaler = MinMaxScaler()
-
-df = pd.DataFrame(scaler.fit_transform(df), columns = df.columns)
-
-
-#- 2.2: Diff
-for i in range(1,number_of_diff+1):
-    df = df.diff().iloc[i:,:]
-
-#- 2.3: Diff
-split_size = round(len(df)* train_size)
-print(f'c1 train size: {split_size}')
-print(f'c1 test size: {len(df.index) - split_size}')
-
-# Split
-X = df.iloc[:split_size]
-Y = df.iloc[split_size:]
-
-
-
-    
-
-
-
-
-
-
-#Step X: Inverse Transformations
-df = pd.DataFrame(scaler.inverse_transform(df), columns = df.columns)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-## Work Directory
-wd = os.getcwd().replace('\src','\\')
