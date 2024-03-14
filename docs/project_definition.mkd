@@ -13,15 +13,15 @@
 
 ## DEFINITIONS:
 
-*PROBLEM DESCRIPTION:* The project aims to emulate an hypotetic situation where an organization has request to identify the top 10 countries by GDP at the end of the decade (2030) to answer the main question, among the top 10 economies, considering the information given by the avaiable data.
+*PROBLEM DESCRIPTION:* The project aims to emulate an hypotetic situation where an organization has request to identify the top 10 countries by GDP at the end of 2024 and at the end of the decade (2030) to answer the main question, among the top 10 economies, considering the information given by the avaiable data.
 
-*BUSINESS REQUIREMENT:* To detect the potencial top 10 Countries by GDP at the end of the decade (2030) highligthing the most relevant changes from the baseline.
+*BUSINESS REQUIREMENT:* To detect the potencial top 10 Countries by GDP at 2024 and at the end of the decade (2030) highligthing the most relevant changes from the baseline.
 
 *OBJECTIVE:* To achive an average MAPE of <= 20% in the forecasting of GDP values to identify the top 10 economies in the given time horizont. (20% considering the incertainty level caused by the last global crisis) 
 
 *KEY ACTIVITIES:*
 * Characterize the countries by the given metrics.
-* 2030 forecasting of GDP indicator.
+* 2024 & 2030 forecasting of GDP indicator.
 * Analyze the GDP indicator by country the given horizon considering contextual information.
 * Detect the main changes among the countries ranking between the baseline and the target horizon.
 
