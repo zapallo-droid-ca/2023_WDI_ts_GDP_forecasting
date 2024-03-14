@@ -117,10 +117,10 @@ Developing of deliverables resources specified in "Schedule" section based on th
 | Business Understanding  | project_definition.mkd                                                                     | 2:00 hs      | 2:15 hs   |
 | Data Understanding      | etl.py / eda.ipynb                                                                         | 12:00 hs     | 16:00 hs  |
 | Data Preparation        | df.csv.gz / datamart.db                                                                    | 4:00 hs      | 1:00 hs   |
-| Modeling                | train.py                                                                                   | 12:00 hs     | 14:00 hs  |
-| Evaluation              | test.py / models_summary.xlsx                                                              | 4:00 hs      | 6:00 hs   |
-| Deployment              | executive_report.pptx / project_notebook.mkd / projectpedia.mkd                | 8:00 hs      |           | 
-|                         |                                                                                   *TOTAL:* | 45:00 hs     |           |
+| Modeling                | train.py                                                                                   | 12:00 hs     | 16:00 hs  |
+| Evaluation              | test.py / models_summary.xlsx                                                              | 4:00 hs      | 12:00 hs  |
+| Deployment              | executive_report.pptx / project_notebook.mkd / projectpedia.mkd                            | 8:00 hs      | 1:00 hs   | 
+|                         |                                                                                   *TOTAL:* | 45:00 hs     | 50:15 hs  |
 
 ```mermaid renderAs=mermaid
 gantt
