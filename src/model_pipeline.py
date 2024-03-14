@@ -61,7 +61,7 @@ def arima_pipe(df, countries, prep_scaler, prep_diff, scaler_minmax, cols_exclud
 
 ##-- Holt-Winters
 def howi_pipe(df, countries, cols_exclude_preprocess, time_var, target_var, lags, threshold, max_adf_iters, models_summary, iterHowi, typeHowi,
-              models_results, category_var, train_size, predict_index, wd, scaler_minmax = True, prep_scaler = True, prep_diff = True):
+              models_results, category_var, train_size, predict_index, wd, scaler_minmax, prep_scaler, prep_diff):
     
     HOWI_done = []
     HOWI_wrong = []
@@ -78,7 +78,7 @@ def howi_pipe(df, countries, cols_exclude_preprocess, time_var, target_var, lags
             data, aux_bj, scaler, first_element = mttp.ttp_preprocess(data = df_temp, prep_scaler = prep_scaler, prep_diff = prep_diff, scaler_minmax = scaler_minmax, 
                                                                       cols_exclude_preprocess = cols_exclude_preprocess, c_code = c_code, c_name = c_name, 
                                                                       time_var = time_var, target_var = target_var, lags = lags, threshold = threshold, 
-                                                                      max_adf_iters = max_adf_iters, ARIMA = True)
+                                                                      max_adf_iters = max_adf_iters, ARIMA = False)
             
             #Train/Test Split
             X, y, Xy = mttp.tt_split(data = data, train_size = train_size)

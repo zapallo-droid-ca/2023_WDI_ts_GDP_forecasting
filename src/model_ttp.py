@@ -37,23 +37,27 @@ def tt_split(data, train_size):
 def ttp_preprocess(data, prep_scaler, prep_diff, scaler_minmax, cols_exclude_preprocess, c_code, c_name, time_var, target_var, 
                    lags, threshold, max_adf_iters, ARIMA = True):
     
-    if prep_scaler:
-        data, scaler = mprep.scaled_values(df = data, scaler_minmax = True, cols_exclude_preprocess = cols_exclude_preprocess)
-    else:
-        scaler = None
-    
+   #Autorregressive Values
     aux_bj = mprep.bj_autoregressive_values(df = data, c_code = c_code, c_name = c_name, time_var = time_var, target_var = target_var, lags = lags, 
                                             threshold = threshold, max_adf_iters = max_adf_iters) 
     
+    #ARIMA Issues
     if ARIMA:  
         if aux_bj['i_order'].values[0] == 0: #To keep all the series with the same structure d==0 fail for ARIMA
             aux_bj['i_order'] = [1]
-
+            
+    #Differenciation --- Making serie stationary
     if prep_diff:
         data,first_element = mprep.target_diff(df = data, autoregressive_vals = aux_bj, target_var = target_var)
     else:
         data['target'] = data[target_var]
         first_element = None        
+
+    #Scaling
+    if prep_scaler:
+        data, scaler = mprep.scaled_values(df = data, scaler_minmax = scaler_minmax, cols_exclude_preprocess = cols_exclude_preprocess)
+    else:
+        scaler = None
 
     return data, aux_bj, scaler, first_element
 
@@ -110,6 +114,9 @@ def model_arima_ttp(X, y, Xy, aux_bj, predict_index, prep_diff = True, first_ele
     
     d = aux_bj.i_order[0]
     
+    iters = len(vectAR) * len(vectMA)
+    counting = 0
+    
     ##Recursive Model    
     for p in vectAR:
         for q in vectMA:        
@@ -137,6 +144,11 @@ def model_arima_ttp(X, y, Xy, aux_bj, predict_index, prep_diff = True, first_ele
                                        'object': model})
                 
                 model_results[f'{p},{d},{q}'] = y_pred.values
+                
+                counting +=1
+                
+                print(f'iter {counting} from {iters} ended {np.round((counting/iters) * 100,1)}% Completed')
+                
             except:
                 print(f'The model failed in Iter p:{p} d:{d} q:{q}')
     
@@ -146,11 +158,12 @@ def model_arima_ttp(X, y, Xy, aux_bj, predict_index, prep_diff = True, first_ele
     exp_min_mape = model_summary[model_summary['mape'] == min(model_summary.mape)]['exp'].values[0]
     model_results = model_results[exp_min_mape]
     model = model_summary[model_summary['exp'] == exp_min_mape]['object'].reset_index(drop = True)[0]
+    exp = model_summary[model_summary['exp'] == exp_min_mape]['exp'].reset_index(drop = True)[0]
     
     data_model = Xy.copy()
     data_model['y_pred'] = data_model['target']
     data_model.iloc[-len(y):,-1] = model_results    
-    data_model['exp'] = f'{p},{d},{q}'
+    #data_model['exp'] = exp
     
     ###----PRODUCTION
     del(X_rec,y_pred,mape)
@@ -168,20 +181,23 @@ def model_arima_ttp(X, y, Xy, aux_bj, predict_index, prep_diff = True, first_ele
                                                       'target': [np.nan] * len(predict_index),
                                                       'tts_flag': ['Predict']  * len(predict_index),
                                                       'y_pred': y_pred})])
-      
+    
+    data_model['exp'] = exp      
+   
+    #Desescalamos
+    if prep_scaler and scaler != None:     
+        cols = ['target','y_pred']   
+        
+        for col in cols:                
+            data_model.loc[data_model['tts_flag'] != 'Predict',col] = scaler.inverse_transform(data_model.loc[data_model['tts_flag'] != 'Predict', col].values.reshape(-1, 1))
+            data_model.loc[data_model['tts_flag'] == 'Predict',col] = scaler.inverse_transform(data_model.loc[data_model['tts_flag'] == 'Predict', col].values.reshape(-1, 1))            
+        
     #Des-diferenciamos la variable objetivo
     if prep_diff and first_element != None:    
-        data_model[['level','target','y_pred']] = mprep.rebuild_diffed(data_model[['level','target','y_pred']],first_element)#.values
-    
-    #Desescalamos
-    if prep_scaler and scaler != None:        
-        cols = ['level','target','y_pred']   
-        #cols = ['y_pred']   
-        data_model.loc[data_model['tts_flag'] != 'Predict',cols] = pd.DataFrame(scaler.inverse_transform(data_model.loc[data_model['tts_flag'] != 'Predict',cols]), columns=cols)
-        data_model.loc[data_model['tts_flag'] == 'Predict',cols] = pd.DataFrame(scaler.inverse_transform(data_model.loc[data_model['tts_flag'] == 'Predict',cols]), columns=cols)
-                      
-        cols = ['level','target']
-        data_model.loc[data_model['tts_flag'] == 'Predict',cols] = np.nan
+        data_model[['target','y_pred']] = mprep.rebuild_diffed(series = data_model[['target','y_pred']], autoregressive_vals = aux_bj, first_element_original = first_element)#.values
+
+    cols = ['level','target']
+    data_model.loc[data_model['tts_flag'] == 'Predict',cols] = np.nan
 
     return data_model, model_summary, model
 
@@ -194,8 +210,8 @@ def model_howi_ttp(X, y, Xy, iterHowi, typeHowi, aux_bj, predict_index, prep_dif
     model_summary = []
     model_results = {}
     
-    seasonal_periods = range(2,int(np.floor(len(X.index)/2))) #Iterating with top in half length 
-    
+    seasonal_periods = range(2,int(np.floor(len(X.index)/2))) #Iterating with top in quarter length 
+
     iters = len(iterHowi)**3 * len(typeHowi)**2 * len(seasonal_periods)
     
     counting = 0
@@ -207,7 +223,7 @@ def model_howi_ttp(X, y, Xy, iterHowi, typeHowi, aux_bj, predict_index, prep_dif
                     for m in iterHowi:
                         for n in seasonal_periods:
                             #Train
-                            
+                                
                             model = ExponentialSmoothing(X['target'], trend = k, seasonal = l, seasonal_periods = n)
                             model = model.fit(smoothing_level= i, smoothing_trend = j, smoothing_seasonal = m, optimized=False)
                             
@@ -247,61 +263,47 @@ def model_howi_ttp(X, y, Xy, iterHowi, typeHowi, aux_bj, predict_index, prep_dif
     exp_min_mape = model_summary[model_summary['mape'] == min(model_summary.mape)]['exp'].values[0]
     model_results = model_results[exp_min_mape]
     model = model_summary[model_summary['exp'] == exp_min_mape]['object'].reset_index(drop = True)[0]
+    exp = model_summary[model_summary['exp'] == exp_min_mape]['exp'].reset_index(drop = True)[0]
     
     data_model = Xy.copy()
     data_model['y_pred'] = data_model['target']
     data_model.iloc[-len(y):,-1] = model_results  
-    data_model['exp'] = f's_level:{i}, s_trend:{j}, s_seasonal:{m}, trend:{k}, level:{l}, s_periods:{n}'
     
     ###----PRODUCTION
     del(X_rec,y_pred,mape)
-    
-    X_pred = Xy['target'].values
+    X_pred = data_model['y_pred'].values
     y_pred = []
     
-    for i in range(len(predict_index)):
+    for i in range(len(predict_index)): #Recursive
         pred = model.forecast(1) #Using the model to predict one step      
         X_pred = np.append(X_pred, pred)
         y_pred.append(pred[0])
         
         #Updating the model
         model = ExponentialSmoothing(X_pred[i:], trend = k, seasonal = l, seasonal_periods = n)
-        model = model.fit(smoothing_level= i, smoothing_trend = j, smoothing_seasonal = m, optimized=False)
-        
+        model = model.fit(smoothing_level= i, smoothing_trend = j, smoothing_seasonal = m, optimized=False)   
+   
     data_model = pd.concat([data_model,pd.DataFrame({'time':predict_index,
-                                                      'level': [np.nan] * len(predict_index),
-                                                      'target': [np.nan] * len(predict_index),
-                                                      'tts_flag': ['Predict']  * len(predict_index),
-                                                      'y_pred': y_pred})])
+                                                     'level': [np.nan] * len(predict_index),
+                                                     'target': [np.nan] * len(predict_index),
+                                                     'tts_flag': ['Predict']  * len(predict_index),
+                                                     'y_pred': y_pred})])
     
-    #Des-diferenciamos la variable objetivo
-    if prep_diff and first_element != None:    
-        data_model[['level','target','y_pred']] = mprep.rebuild_diffed(data_model[['level','target','y_pred']],first_element)#.values
+    data_model['exp'] = exp
     
     #Desescalamos
-    if prep_scaler and scaler != None:        
-        cols = ['level','target','y_pred']   
-        data_model.loc[data_model['tts_flag'] != 'Predict',cols] = pd.DataFrame(scaler.inverse_transform(data_model.loc[data_model['tts_flag'] != 'Predict',cols]), columns=cols)
-        data_model.loc[data_model['tts_flag'] == 'Predict',cols] = pd.DataFrame(scaler.inverse_transform(data_model.loc[data_model['tts_flag'] == 'Predict',cols]), columns=cols)
+    if prep_scaler and scaler != None:     
+        cols = ['target','y_pred']   
         
-        cols = ['level','target']
-        data_model.loc[data_model['tts_flag'] == 'Predict',cols] = np.nan
-
-    return data_model, model_summary, model        
-
-
-
+        for col in cols:                
+            data_model.loc[data_model['tts_flag'] != 'Predict',col] = scaler.inverse_transform(data_model.loc[data_model['tts_flag'] != 'Predict', col].values.reshape(-1, 1))
+            data_model.loc[data_model['tts_flag'] == 'Predict',col] = scaler.inverse_transform(data_model.loc[data_model['tts_flag'] == 'Predict', col].values.reshape(-1, 1))            
+        
     #Des-diferenciamos la variable objetivo
     if prep_diff and first_element != None:    
-        data_model[['level','target','y_pred']] = mprep.rebuild_diffed(data_model[['level','target','y_pred']],first_element)#.values
-    
-    #Desescalamos
-    if prep_scaler and scaler != None:        
-        cols = ['level','target','y_pred']   
-        data_model.loc[data_model['tts_flag'] != 'Predict',cols] = pd.DataFrame(scaler.inverse_transform(data_model.loc[data_model['tts_flag'] != 'Predict',cols]), columns=cols)
-        data_model.loc[data_model['tts_flag'] == 'Predict',cols] = pd.DataFrame(scaler.inverse_transform(data_model.loc[data_model['tts_flag'] == 'Predict',cols]), columns=cols)
-        
-        cols = ['level','target']
-        data_model.loc[data_model['tts_flag'] == 'Predict',cols] = np.nan
+        data_model[['target','y_pred']] = mprep.rebuild_diffed(series = data_model[['target','y_pred']], autoregressive_vals = aux_bj, first_element_original = first_element)#.values
+
+    cols = ['level','target']
+    data_model.loc[data_model['tts_flag'] == 'Predict',cols] = np.nan
 
     return data_model, model_summary, model

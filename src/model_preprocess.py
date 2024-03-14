@@ -12,14 +12,15 @@ def scaled_values(df, scaler_minmax, cols_exclude_preprocess):
     
     data = df.copy()
     
-    cols = data.drop(columns = cols_exclude_preprocess).columns    
+    #cols = data.drop(columns = cols_exclude_preprocess).columns    
     
     if scaler_minmax:
         scaler = MinMaxScaler()
     else:
         scaler = StandardScaler()
     
-    data[cols] = scaler.fit_transform(data[cols])
+    #data[cols] = scaler.fit_transform(data[cols])
+    data['target'] = scaler.fit_transform(data[['target']])
     
     return data, scaler
 
@@ -90,25 +91,6 @@ def rebuild_diffed(series, autoregressive_vals, first_element_original):
         cumsum = series.cumsum().fillna(0) + first_element_original        
      
     return cumsum
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-#def rebuild_diffed(series, first_element_original): 
-#    cumsum = series.cumsum()
-#    return cumsum.fillna(0) + first_element_original
-
-
 
 
 
