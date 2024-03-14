@@ -3,8 +3,8 @@
 # Version History
 | Version # | Implemented By  | Revision Date |  Approved By  | Approval Date |    Reason   |
 | :-------: | :-------------: | :-----------: | :-----------: | :-----------: | :---------: |
-|    1.0    |   Data Anlayst  |    mm/dd/yy   |    End User   |   2024/01/04  | Preliminar  |
-|    2.0    |   Data Anlayst  |    mm/dd/yy   |    End User   |       TBD     | Definitive  |
+|    1.0    |   Data Anlayst  |   2024/01/04  |    End User   |   2024/01/04  | Preliminar  |
+|    2.0    |   Data Anlayst  |   2024/03/14  |    End User   |       TBD     | Definitive  |
 
 ## KEY CONCEPTS:
 
